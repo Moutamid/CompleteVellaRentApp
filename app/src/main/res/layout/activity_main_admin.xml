@@ -1,0 +1,66 @@
+<!-- res/layout/activity_main.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lexend_semi_bold"
+        android:text="Admin Panel"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="32dp" />
+    <Button
+        android:id="@+id/btnAddOwner"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/edit_bg"
+        android:text="Add Owner" />
+
+    <Button
+        android:id="@+id/btnViewOwners"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnAddOwner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_bg"
+        android:text="View Owners" />
+  <Button
+        android:id="@+id/btnViewPending"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnViewOwners"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_bg"
+        android:text="Verification Pending" />
+
+    <Button
+        android:id="@+id/btnViewVerified"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnViewPending"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_bg"
+        android:text="Verified Villas" />
+    <Button
+        android:id="@+id/btnViewLogout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnViewVerified"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_bg"
+        android:text="Logout" />
+
+    <!-- Add other UI elements as needed -->
+
+</RelativeLayout>

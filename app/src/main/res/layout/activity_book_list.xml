@@ -1,0 +1,25 @@
+<!-- res/layout/activity_owners_list.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="BackPress"
+        android:drawableStart="@drawable/ic_back"
+        android:fontFamily="@font/lexend_semi_bold"
+        android:text="    All Bookings"
+        android:textColor="#000"
+        android:textSize="28dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewOwners"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

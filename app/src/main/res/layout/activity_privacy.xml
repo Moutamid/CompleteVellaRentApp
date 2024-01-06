@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#202020"
+    android:orientation="vertical"
+    tools:context="com.moutimid.vellarentapp.activities.Home.PrivacyActivity">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/lexend_extra_bold"
+        android:text="Terms and Conditions"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/lexend_light"
+        android:layout_marginBottom="20dp"
+        android:text="* Rental Period: Villa rentals are available for day use from 12:00 AM to 5:00 PM.
+\n*   Common Areas and Outdoor Spaces: Guests are welcome to enjoy the common areas and outdoor spaces during the specified rental hours.
+\n*   Restricted Access: Bedrooms will not be accessible during the rental period.
+\n*   Check-In and Check-Out: Please adhere to the designated check-in time of 12:00 AM and check-out time of 5:00 PM.
+\n*   Reservation Confirmation: A confirmed reservation is required for villa rental.
+\n*   Guest Responsibility: Guests are responsible for maintaining the cleanliness and good condition of the rented spaces.
+\n*   Noise Levels: Please be mindful of noise levels to respect the privacy and tranquility of the surrounding areas.
+\n*   Security Deposit: A security deposit may be required, refundable upon inspection and adherence to the rental guidelines.
+\n*   Cancellation Policy: Refer to the cancellation policy for details on cancellations and refunds.
+\n*   Code of Conduct: Guests are expected to conduct themselves in a respectful manner, adhering to all local laws and regulations.
+\n*   Maximum Occupancy: The villa has a maximum occupancy limit; please ensure compliance.
+\n*   Additional Services: Any additional services or requests should be communicated in advance and may be subject to additional charges.
+\n*   Smoking and Pets: Smoking and pets are not allowed within the villa premises.
+\n*   Liability: The villa owner or management is not liable for any loss, damage, or injury during the rental period.
+\n*   Compliance: Guests are expected to comply with all rules and regulations outlined in the rental agreement.
+Enjoy your luxurious villa experience!"
+        android:textColor="#fff"
+        android:lineSpacingExtra="3dp"
+        android:textSize="13dp" />
+   </LinearLayout>
+</ScrollView>

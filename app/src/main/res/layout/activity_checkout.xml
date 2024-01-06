@@ -1,0 +1,87 @@
+<!-- activity_booking.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#202020"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/lexend_extra_bold"
+        android:text="Check Out Details"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+
+    <EditText
+        android:id="@+id/et_card_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_bg"
+        android:hint="Enter Credit Card Number"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:textColorHint="#C5C4C4"
+        android:textSize="13dp" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_bg"
+        android:hint="Name"
+
+        android:editable="false"
+        android:focusable="false"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:textColorHint="#D9D9D9"
+        android:textSize="13dp" />
+
+    <EditText
+        android:id="@+id/et_number_of_persons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_bg"
+        android:hint="Enter Number of Persons"
+        android:padding="10dp"
+        android:inputType="number"
+
+        android:editable="false"
+        android:focusable="false"
+        android:textColor="#fff"
+        android:textColorHint="#C5C4C4"
+        android:textSize="13dp" />
+
+    <EditText
+        android:id="@+id/et_date"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_bg"
+        android:hint="Date"
+        android:padding="10dp"
+        android:editable="false"
+        android:focusable="false"
+        android:textColor="#fff"
+        android:textColorHint="#D9D9D9"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_bg"
+        android:text="Continue" />
+
+</LinearLayout>

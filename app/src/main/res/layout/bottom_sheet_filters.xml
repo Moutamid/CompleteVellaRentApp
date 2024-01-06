@@ -1,0 +1,74 @@
+<!-- bottom_sheet_filters.xml -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/car_bg"
+    android:backgroundTint="#202020"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/price_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/lexend_medium"
+        android:text="Select Price Range (5000$)"
+
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <SeekBar
+        android:id="@+id/seekBarPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="8000"
+       android:padding="16dp"
+        android:progress="5000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/lexend_medium"
+        android:text="Select Amaneties"
+
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+    <!-- Options Spinner -->
+    <Spinner
+        android:id="@+id/spinnerOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:entries="@array/options_array" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/lexend_medium"
+        android:text="Select No of Bedrooms"
+
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <Spinner
+        android:id="@+id/spinnerBedrooms"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:entries="@array/bedrooms_array"/>
+
+    <!-- Apply Filters Button -->
+    <Button
+        android:id="@+id/btnApplyFilters"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+
+        android:layout_height="wrap_content"
+        android:text="Apply Filters" />
+</LinearLayout>

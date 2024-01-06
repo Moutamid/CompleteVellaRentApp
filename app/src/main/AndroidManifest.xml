@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name="com.moutimid.vellarentapp.helper.MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BottomNavigation"
+        tools:targetApi="31">
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Home.CheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Home.ImageDisplayActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.AddOwnerActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.AllVillaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.PendingVillaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity"
+            android:exported="false" />
+        <activity android:name="com.moutimid.vellarentapp.vellarentappadmin.activities.OwnersListActivity" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Authentication.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Authentication.SplashActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.AddVillaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.VillaDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Home.PrivacyActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Owner.OwnVillasActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAuIxeEpQQgN84bBitDRksZTcLHtIKSAeY" />
+
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Home.VillaDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Home.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Authentication.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Authentication.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.moutimid.vellarentapp.activities.Authentication.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.BookingListActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.moutimid.vellarentapp.MainActivity"
+            android:exported="true" />
+   <activity
+            android:name="com.moutimid.vellarentapp.rentownerapp.activities.Home.EditVillaActivity"
+            android:exported="true" />
+
+        <service
+            android:name="com.moutimid.vellarentapp.vellarentappadmin.helper.MessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver
+            android:name="com.moutimid.vellarentapp.activities.notification.NotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>

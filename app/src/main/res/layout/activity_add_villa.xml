@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_back"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:onClick="BackPress"
+                android:text="    Add Villa"
+                android:textSize="28dp" />
+
+
+
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:onClick="profile_image"
+            android:scaleType="fitCenter"
+            android:src="@drawable/defualt_image" />
+
+        <EditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+            android:hint="@string/property_name"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+
+            android:hint="@string/property_description"
+            android:inputType="textMultiLine"
+            android:padding="10dp" />
+
+
+        <EditText
+            android:id="@+id/bedroom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+
+            android:hint="@string/bedroom"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/bathroom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+
+            android:hint="@string/bathroom"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/person_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+            android:hint="Available for how many persons?"
+            android:inputType="number"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+        <AutoCompleteTextView
+            android:id="@+id/location_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+            android:hint="Enter Location"
+            android:maxLines="3"
+
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/lat_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+            android:editable="false"
+            android:focusable="false"
+            android:hint="@string/latitude"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/lng_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+            android:editable="false"
+            android:focusable="false"
+            android:hint="@string/longitude"
+
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+
+        =
+
+        <EditText
+            android:id="@+id/bill_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_bg"
+
+            android:hint="@string/bill"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp" />
+
+        <Button
+            android:id="@+id/button_choose_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:text="Choose Villa's Image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:text="House Rules"
+                android:textSize="18dp" />
+
+            <CheckBox
+                android:id="@+id/pet_friendly_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/pet_friendly" />
+
+            <CheckBox
+                android:id="@+id/smoker_friendly_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="@string/smoker_friendly" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:text="Billing"
+                android:textSize="18dp" />
+
+            <CheckBox
+                android:id="@+id/bills_included_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bills_included" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:text="Property Ameneties"
+                android:textSize="18dp" />
+
+            <CheckBox
+                android:id="@+id/air_conditioning_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/air_conditioning" />
+
+            <CheckBox
+                android:id="@+id/dryer_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Minibar" />
+
+            <CheckBox
+                android:id="@+id/kitchen_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Kitchen" />
+
+            <CheckBox
+                android:id="@+id/furnished_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Furnished" />
+
+            <CheckBox
+                android:id="@+id/garden_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Garden" />
+
+            <CheckBox
+                android:id="@+id/heating_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Infinity Pool" />
+
+            <CheckBox
+                android:id="@+id/parking_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Parking" />
+
+            <CheckBox
+                android:id="@+id/tv_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Gym" />
+
+            <CheckBox
+                android:id="@+id/washing_machine_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Play Ground" />
+
+            <CheckBox
+                android:id="@+id/wifi_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="WIFI" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:text="Property Detais"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Bathroom Details"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Full bathroom"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/full_bathroom_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/full_bathroom_options"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Steam shower"
+                android:textColor="@color/black"
+
+                android:textSize="15dp"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/steam_shower_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/steam_shower_options"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Toilet"
+                android:textColor="@color/black"
+
+                android:textSize="15dp"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/toilet_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/toilet_options"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="Bedroom Details"
+            android:textColor="#fff"
+            android:textSize="17dp"
+
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/room_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="1dp"
+            android:entries="@array/room_types"
+
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnAddOwner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:background="@drawable/edit_bg"
+            android:text="Add Villa" />
+
+    </LinearLayout>
+
+</ScrollView>

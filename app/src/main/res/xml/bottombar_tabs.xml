@@ -1,0 +1,15 @@
+<tabs>
+    <tab
+        id="@+id/home"
+        icon="@drawable/home"
+        title="Villas"
+/>
+    <tab
+       id="@+id/favourite"
+       icon="@drawable/baseline_favorite_24"
+       title="Favourite" />
+    <tab
+       id="@+id/types"
+       icon="@drawable/user"
+       title="Profile"  />
+</tabs>

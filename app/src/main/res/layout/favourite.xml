@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#CC202020"
+    app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="5dp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_bg"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            app:riv_corner_radius="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
+            android:background="#CC202020"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/name_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/image"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/villa_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/calibri_bold"
+                android:maxLines="1"
+                android:paddingEnd="20dp"
+
+                android:text="Food Street Samundri "
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/bill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexend_medium"
+            android:paddingRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/name_layout"
+            android:maxLines="1"
+            android:text="$5000/month"
+            android:textColor="#C1564E"
+            android:textSize="11dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/location_img"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_below="@+id/bill"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/pin"
+                android:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bill"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+
+                android:layout_marginBottom="12dp"
+                android:layout_toRightOf="@+id/location_img"
+                android:fontFamily="@font/lexend_light"
+                android:maxLines="1"
+                android:text="2.7 km away from you"
+                android:textColor="#fff"
+                android:textSize="9dp" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bedroom"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/name_layout"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="12dp"
+                android:layout_toRightOf="@+id/distance"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="#29C32424"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/no_of_bedroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:fontFamily="@font/lexend_light"
+                    android:maxLines="1"
+                    android:text="4"
+                    android:textColor="#6A6262"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/bed"
+
+                    app:tint="@color/black" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@+id/bedroom"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btn_bg"
+                android:gravity="center"
+                android:text="Check availability"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

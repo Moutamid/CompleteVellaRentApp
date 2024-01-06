@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="app_color">#14677A</color>
+    <color name="colorAccent">#14677A</color>
+    <color name="green_color">#549F3B</color>
+    <color name="pink_color">#F59FC1</color>
+    <color name="textColor">#FFffff</color>
+    <color name="grey">#5A4B4B</color>
+    <color name="colorGray">#5A4B4B</color>
+    <color name="pink">#fb8978</color>
+    <color name="red">#F44336</color>
+
+
+</resources>
