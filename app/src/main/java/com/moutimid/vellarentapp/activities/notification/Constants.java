@@ -56,7 +56,8 @@ public class Constants {
             URL google = null;
             try {
                 google = new URL("https://raw.githubusercontent.com/Moutamid/Moutamid/main/apps.txt");
-            } catch (final MalformedURLException e) {
+            }
+            catch (final MalformedURLException e) {
                 e.printStackTrace();
             }
             BufferedReader in = null;

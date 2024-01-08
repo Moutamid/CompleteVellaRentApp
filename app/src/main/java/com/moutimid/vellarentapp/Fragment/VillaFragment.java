@@ -206,7 +206,7 @@ public class VillaFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     Villa villaModel = ds.getValue(Villa.class);
-                    Log.d("dataa", villaModel.isBills_included() + "");
+                    Log.d("dataa", villaModel.verified + " "+ villaModel.getBedroom());
                     if (villaModel.verified && villaModel.getBedroom() != 0) {
                         DataSnapshot propertyAmenities1 = ds.child("PropertyAmenities");
                         DataSnapshot houseRules1 = ds.child("HouseRules");
@@ -281,7 +281,7 @@ public class VillaFragment extends Fragment {
                         villaModel.setImages(imagesMap);
                         productModelList.add(villaModel);
                         loading.setVisibility(View.GONE);
-                        filter_dates(Stash.getString("dates"));
+//                        filter_dates(Stash.getString("dates"));
                     }
 //                    stringArray = new String[productModelList.size()];
 //                    for (int i = 0; i <= productModelList.size(); i++) {
