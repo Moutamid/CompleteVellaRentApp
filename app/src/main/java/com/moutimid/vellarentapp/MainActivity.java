@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 101) {
             getLocation();
         }
+
         if(requestCode==PERMISSION_REQUEST_CODE)
         {
             if (grantResults.length > 0 &&
