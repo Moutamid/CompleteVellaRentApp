@@ -14,9 +14,13 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:visibility="gone"
             android:background="@drawable/villa"
             android:scaleType="fitXY" />
-
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_"
             android:layout_width="match_parent"
@@ -59,7 +63,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/image"
+            android:layout_below="@+id/viewPager"
             android:layout_marginTop="-30dp"
             android:background="@drawable/car_bg"
             android:backgroundTint="#F6F6F6"
@@ -103,6 +107,7 @@
                     android:layout_height="25dp"
                     android:layout_below="@+id/name_layout"
                     android:layout_marginLeft="20dp"
+                    android:visibility="gone"
                     android:layout_marginTop="7dp"
                     android:layout_marginRight="5dp"
                     android:layout_toRightOf="@+id/distance"
@@ -140,6 +145,7 @@
                     android:layout_below="@+id/name_layout"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="7dp"
+                    android:visibility="gone"
                     android:layout_marginRight="5dp"
                     android:layout_toRightOf="@+id/distance"
                     android:background="@drawable/stroke_bg"
@@ -226,6 +232,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:orientation="horizontal">
 
                 <TextView

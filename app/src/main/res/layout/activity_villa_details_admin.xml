@@ -15,7 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="@drawable/villa"
+            android:visibility="gone"
             android:scaleType="fitXY" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_"
             android:layout_width="match_parent"
@@ -40,14 +45,12 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="3dp"
                 android:src="@drawable/pen" />
-
-
-        </androidx.appcompat.widget.Toolbar>
+                    </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/image"
+            android:layout_below="@+id/viewPager"
             android:background="@drawable/car_bg"
             android:backgroundTint="#F6F6F6"
             android:layout_marginTop="-30dp"
@@ -87,6 +90,7 @@
                 <LinearLayout
                     android:id="@+id/bedroom"
                     android:layout_height="25dp"
+                    android:visibility="gone"
                     android:layout_below="@+id/name_layout"
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
@@ -130,6 +134,7 @@
                     android:layout_toRightOf="@+id/distance"
                     android:background="@drawable/stroke_bg"
                     android:backgroundTint="#CC87B4B0"
+                    android:visibility="gone"
 
                     android:orientation="horizontal">
 
@@ -210,6 +215,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/no_of_persons"
@@ -229,6 +236,8 @@
                     android:id="@+id/availability"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:visibility="gone"
+
                     android:layout_gravity="end"
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="30dp"

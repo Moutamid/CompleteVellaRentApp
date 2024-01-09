@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -89,6 +90,17 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor("#202020"));
         }
+        fetch_data();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetch_data();
+    }
+
+    public void fetch_data() {
         villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
         propertyRef = database.getReference("RentApp").child("Villas").child(villaModel.getKey());
 
@@ -346,6 +358,18 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
             ImageAdapter imageAdapter = new ImageAdapter(imageUrls);
             recyclerView.setAdapter(imageAdapter);
             imageAdapter.notifyDataSetChanged();
+
+
+            ViewPager viewPager = findViewById(R.id.viewPager);
+
+            // Get image URLs and position from the intent
+
+            // Set up the ViewPager with the ImagePagerAdapter
+            com.moutamid.vellarentapp.adapter.ImagePagerAdapter imagePagerAdapter = new com.moutamid.vellarentapp.adapter.ImagePagerAdapter(this, imageUrls);
+            viewPager.setAdapter(imagePagerAdapter);
+
+            // Set the starting position
+            viewPager.setCurrentItem(0);
         }
     }
 

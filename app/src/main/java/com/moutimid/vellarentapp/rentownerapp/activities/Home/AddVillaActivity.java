@@ -347,6 +347,8 @@ public class AddVillaActivity extends AppCompatActivity {
             image_profile_str = data.getData();
             profile_pic.setImageURI(image_profile_str);
             profile_pic.setVisibility(View.VISIBLE);
+            selectedImageUris.add(data.getData());
+
         }
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -81,6 +82,12 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor("#202020"));
         }
+
+
+        data_fetch();
+    }
+
+    public void data_fetch() {
         villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -128,6 +135,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         } else {
             house_rules.setVisibility(View.GONE);
         }
+
         if (villaModel.getHouseRules().isPetFriendly()) {
             pet_friendly.setVisibility(View.VISIBLE);
         } else {
@@ -252,10 +260,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
             }
         });
-
-
     }
-
     public void onBack(View view) {
         onBackPressed();
     }
@@ -338,6 +343,18 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
             ImageAdapter imageAdapter = new ImageAdapter(imageUrls);
             recyclerView.setAdapter(imageAdapter);
             imageAdapter.notifyDataSetChanged();
+
+
+            ViewPager viewPager = findViewById(R.id.viewPager);
+
+            // Get image URLs and position from the intent
+
+            // Set up the ViewPager with the ImagePagerAdapter
+            com.moutamid.vellarentapp.adapter.ImagePagerAdapter imagePagerAdapter = new com.moutamid.vellarentapp.adapter.ImagePagerAdapter(this, imageUrls);
+            viewPager.setAdapter(imagePagerAdapter);
+
+            // Set the starting position
+            viewPager.setCurrentItem(0);
         }
     }
 
@@ -366,5 +383,13 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         } else {
             Toast.makeText(com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity.this, "Invalid Coordinates to show marker", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        data_fetch();
+
     }
 }

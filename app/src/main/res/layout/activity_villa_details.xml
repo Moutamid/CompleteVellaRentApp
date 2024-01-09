@@ -18,6 +18,8 @@
             android:background="@drawable/villa"
             android:scaleType="fitXY" />
 
+
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"

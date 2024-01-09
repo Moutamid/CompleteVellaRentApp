@@ -38,22 +38,29 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.moutamid.vellarentapp.R;
 import com.moutimid.vellarentapp.helper.Config;
+import com.moutimid.vellarentapp.model.HouseRules;
+import com.moutimid.vellarentapp.model.PropertyAmenities;
 import com.moutimid.vellarentapp.model.Villa;
 import com.moutimid.vellarentapp.rentownerapp.adapter.EditImageAdapter;
+import com.moutimid.vellarentapp.rentownerapp.helper.Constants;
 import com.moutimid.vellarentapp.rentownerapp.model.Property;
 import com.moutimid.vellarentapp.rentownerapp.model.Rules;
 import com.moutimid.vellarentapp.rentownerapp.model.VillaAmenities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -202,6 +209,16 @@ public class EditVillaActivity extends AppCompatActivity {
         smokerFriendlyCheckbox.setChecked(villaModel.getHouseRules().isSmokerFriendly());
         billsIncludedCheckbox.setChecked(villaModel.isBills_included());
         airConditioningCheckbox.setChecked(villaModel.getPropertyAmenities().isAirConditioning());
+        dryerCheckbox.setChecked(villaModel.getPropertyAmenities().isDryer());
+        kitchenCheckbox.setChecked(villaModel.getPropertyAmenities().isEquippedKitchen());
+        furnishedCheckbox.setChecked(villaModel.getPropertyAmenities().isFurnished());
+        gardenCheckbox.setChecked(villaModel.getPropertyAmenities().isGarden());
+        heatingCheckbox.setChecked(villaModel.getPropertyAmenities().isHeating());
+        parkingCheckbox.setChecked(villaModel.getPropertyAmenities().isParking());
+        tvCheckbox.setChecked(villaModel.getPropertyAmenities().isTv());
+        washingMachineCheckbox.setChecked(villaModel.getPropertyAmenities().isWashingMachine());
+        wifiCheckbox.setChecked(villaModel.getPropertyAmenities().isWifi());
+
 // Set values for other checkboxes
 
 // Setting values for spinners
@@ -335,13 +352,11 @@ public class EditVillaActivity extends AppCompatActivity {
                             property.key = propertyKey;
                             propertyRef.child(propertyKey).setValue(property);
                             propertyRef.child(propertyKey).child("PropertyAmenities").setValue(propertyAmenities);
-
                             propertyRef.child(propertyKey).child("HouseRules").setValue(houseRules).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-//                                    lodingbar.dismiss();
-//                                    finish();
-                                    saveImagesToFirebase(lodingbar);
+
+                                    saveImagesToFirebase(lodingbar, propertyKey);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -401,7 +416,7 @@ public class EditVillaActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    private void saveImagesToFirebase(Dialog loadingbar) {
+    private void saveImagesToFirebase(Dialog loadingbar, String key) {
 
 
         for (String imageUri : imageUrls) {
@@ -409,11 +424,44 @@ public class EditVillaActivity extends AppCompatActivity {
             propertyRef.child(propertyKey).child("images").push().setValue(imageUri);
         }
 
-        Toast.makeText(EditVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
-        loadingbar.dismiss();
         selectedImageUris.clear();
         imageAdapter.notifyDataSetChanged();
-        finish();
+        Query query = Constants.databaseReference().child(com.moutimid.vellarentapp.rentownerapp.helper.Config.villa).orderByChild("key").equalTo(key);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Villa villa = snapshot.getValue(Villa.class);
+                    DataSnapshot propertyAmenities1 = snapshot.child("PropertyAmenities");
+                    DataSnapshot houseRules1 = snapshot.child("HouseRules");
+                    PropertyAmenities propertyAmenities = propertyAmenities1.getValue(PropertyAmenities.class);
+                    HouseRules houseRules = houseRules1.getValue(HouseRules.class);
+                    villa.setPropertyAmenities(propertyAmenities);
+                    villa.setHouseRules(houseRules);
+                    DataSnapshot imagesSnapshot = snapshot.child("images");
+                    Map<String, String> imagesMap = new HashMap<>();
+                    for (DataSnapshot imageSnapshot : imagesSnapshot.getChildren()) {
+                        String imageKey = imageSnapshot.getKey();
+                        String imageUrl = imageSnapshot.getValue(String.class);
+                        imagesMap.put(imageKey, imageUrl);
+                    }
+
+                    villa.setImages(imagesMap);
+                    // Save the Villa instance in Stash
+                    Stash.put(Config.currentModel, villa);
+                }
+                Toast.makeText(EditVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+                loadingbar.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void initAutoCompleteTextView() {

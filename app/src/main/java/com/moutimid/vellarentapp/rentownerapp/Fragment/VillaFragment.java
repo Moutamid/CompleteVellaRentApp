@@ -234,6 +234,11 @@ public class VillaFragment extends Fragment {
 
     @Override
     public void onResume() {
+        if (Config.isNetworkAvailable(getContext())) {
+            getProducts();
+        } else {
+            Toast.makeText(getContext(), "No network connection available.", Toast.LENGTH_SHORT).show();
+        }
         super.onResume();
     }
 }
