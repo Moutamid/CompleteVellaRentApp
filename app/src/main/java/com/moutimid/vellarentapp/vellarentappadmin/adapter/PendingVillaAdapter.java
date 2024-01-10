@@ -39,6 +39,7 @@ public class PendingVillaAdapter extends RecyclerView.Adapter<PendingVillaAdapte
     }
 
     @NonNull
+
     @Override
     public GalleryPhotosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

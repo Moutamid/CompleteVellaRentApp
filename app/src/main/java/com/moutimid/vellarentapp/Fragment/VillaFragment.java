@@ -424,10 +424,12 @@ public class VillaFragment extends Fragment {
             try {
                 final AutocompletePrediction item = adapter.getItem(i);
                 adapter.setDisableSuggestions(true);
-
                 String placeID = null;
+
                 if (item != null) {
+
                     placeID = item.getPlaceId();
+
                 }
 
 //                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
