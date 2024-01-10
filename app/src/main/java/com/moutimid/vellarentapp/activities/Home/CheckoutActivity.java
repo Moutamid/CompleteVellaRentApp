@@ -136,7 +136,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         for (int i = 0; i < villaModels.size(); i++) {
                             if (villaModels.get(i).toString().equals(etDate.getText().toString())) {
                                 j = 1;
-                                Config.alertDialogue(CheckoutActivity.this, "Vella Rent App", "You already booked villa for this date (" + etDate.getText().toString() + ")\"", true);
+                                Config.alertDialogue(CheckoutActivity.this, "Villa Rent App", "You already booked villa for this date (" + etDate.getText().toString() + ")\"", true);
                                 break;
                             }
                         }

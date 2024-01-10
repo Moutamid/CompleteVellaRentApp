@@ -347,7 +347,8 @@ public class AddVillaActivity extends AppCompatActivity {
             image_profile_str = data.getData();
             profile_pic.setImageURI(image_profile_str);
             profile_pic.setVisibility(View.VISIBLE);
-            selectedImageUris.add(data.getData());
+            selectedImageUris.add(image_profile_str);
+
 
         }
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK && data != null) {
@@ -363,6 +364,7 @@ public class AddVillaActivity extends AppCompatActivity {
             }
             imageAdapter.notifyDataSetChanged();
         }
+//        Toast.makeText(this, ""+selectedImageUris.size()+"  size", Toast.LENGTH_SHORT).show();
     }
 
     public void profile_image(View view) {
@@ -402,7 +404,7 @@ public class AddVillaActivity extends AppCompatActivity {
                     });
         }
 
-        Toast.makeText(AddVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(AddVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
         loadingbar.dismiss();
         selectedImageUris.clear();
         imageAdapter.notifyDataSetChanged();

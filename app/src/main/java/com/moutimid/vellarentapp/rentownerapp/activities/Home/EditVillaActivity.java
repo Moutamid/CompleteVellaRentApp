@@ -342,23 +342,24 @@ public class EditVillaActivity extends AppCompatActivity {
 //                        Uri downloadImageUri = task.getResult();
 //                        if (downloadImageUri != null) {
 
-                            property.image = villaModel.getImage();
-                            property.userName = name;
-                            property.no_of_persons = 23;
-                            property.available = "not_available";
-                            property.available_dates = "";
-                            property.ownerID = villaModel.ownerID;
-                            property.verified = false;
-                            property.key = propertyKey;
-                            propertyRef.child(propertyKey).setValue(property);
-                            propertyRef.child(propertyKey).child("PropertyAmenities").setValue(propertyAmenities);
-                            propertyRef.child(propertyKey).child("HouseRules").setValue(houseRules).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                property.image = villaModel.getImage();
+                property.userName = name;
+                property.no_of_persons = 23;
+                property.available = villaModel.available;
+                property.available_dates = villaModel.available_dates;
+                property.ownerID = villaModel.ownerID;
 
-                                    saveImagesToFirebase(lodingbar, propertyKey);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
+                property.verified = villaModel.verified;
+                property.key = propertyKey;
+                propertyRef.child(propertyKey).setValue(property);
+                propertyRef.child(propertyKey).child("PropertyAmenities").setValue(propertyAmenities);
+                propertyRef.child(propertyKey).child("HouseRules").setValue(houseRules).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        saveImagesToFirebase(lodingbar, propertyKey);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(EditVillaActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -389,6 +390,8 @@ public class EditVillaActivity extends AppCompatActivity {
             image_profile_str = data.getData();
             profile_pic.setImageURI(image_profile_str);
             profile_pic.setVisibility(View.VISIBLE);
+            selectedImageUris.add(image_profile_str);
+
         }
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {

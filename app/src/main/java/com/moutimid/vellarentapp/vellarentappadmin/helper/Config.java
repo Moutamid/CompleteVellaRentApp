@@ -59,7 +59,7 @@ public class Config extends Activity {
     public static void alertDialogue(final Activity context, String message, boolean finish) {
 
         new AlertDialog.Builder(context)
-                .setTitle("Vella Rent App")
+                .setTitle("Villa Rent App")
                 .setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -283,6 +283,16 @@ public class VillaFragment extends Fragment {
                         loading.setVisibility(View.GONE);
 //                        filter_dates(Stash.getString("dates"));
                     }
+                    if(productModelList.size()<1)
+                    {
+                        loading.setVisibility(View.GONE);
+
+                    }
+//                    else
+//                    {
+//                        if(productModelList.size()>0)
+//
+//                    }
 //                    stringArray = new String[productModelList.size()];
 //                    for (int i = 0; i <= productModelList.size(); i++) {
 //                        stringArray[i] = productModelList.get(i).town_name;

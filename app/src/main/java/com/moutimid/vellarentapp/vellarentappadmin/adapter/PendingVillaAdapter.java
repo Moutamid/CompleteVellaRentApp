@@ -1,5 +1,6 @@
 package com.moutimid.vellarentapp.vellarentappadmin.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -62,35 +62,26 @@ public class PendingVillaAdapter extends RecyclerView.Adapter<PendingVillaAdapte
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-                LayoutInflater inflater = LayoutInflater.from(ctx);
-                View view1 = inflater.inflate(R.layout.alert_dialogue_layout, null);
-                builder.setView(view1);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        propertyRef = database.getReference("RentApp").child("Villas").child(villa.getKey());
-                        propertyRef.child("verified").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
+               AlertDialog alertDialog= new AlertDialog.Builder(ctx)
+                        .setTitle("Villa Rent App")
+                        .setMessage("Are you sure to verify this villa?")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                propertyRef = database.getReference("RentApp").child("Villas").child(villa.getKey());
+                                propertyRef.child("verified").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
 
-                            public void onComplete(@NonNull Task<Void> task) {
-                                dialog.dismiss();
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        dialog.dismiss();
+                                    }
+
+                                });
                             }
-
-                        });
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle button click
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                        })
+                        .setIcon(R.mipmap.ic_launcher_round)
+                        .show();
+alertDialog.setCancelable(true);
 
                 return false;
             }

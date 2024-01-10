@@ -3,6 +3,7 @@ package com.moutimid.vellarentapp.rentownerapp.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,8 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
     public void onBindViewHolder(@NonNull GalleryPhotosViewHolder holder, final int position) {
         Villa villa = productModels.get(position);
         holder.villa_name.setText(villa.getName());
-        if (villa.getAvailable().equals("not_available")) {
-            holder.not_available.setChecked(true);
-        } else {
-            holder.available.setChecked(true);
-        }
+        Log.d("dataa", villa.getAvailable() + "  dtaa");
+
         if (villa.verified) {
             holder.verified.setText("Verified");
             holder.verified.setTextColor(ctx.getResources().getColor(R.color.green_color));
@@ -71,29 +69,74 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
             holder.verified.setTextColor(ctx.getResources().getColor(R.color.red));
 
         }
-
         holder.available.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Stash.put(Config.currentModel, villa);
-                CalenderDialogClass calenderDialogClass = new CalenderDialogClass(activity);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference propertyRef = database.getReference("RentApp").child("Villas");
+                propertyRef.child(villa.getKey()).child("available").setValue("available");
+                CalenderDialogClass calenderDialogClass = new CalenderDialogClass(activity, villa.getKey(), villa.available_dates);
                 calenderDialogClass.show();
+
             }
         });
+
+
+//        holder.available.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {
+//                    Stash.put(Config.currentModel, villa);
+//                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                    Villa villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
+//                    DatabaseReference propertyRef = database.getReference("RentApp").child("Villas");
+//                    propertyRef.child(villaModel.getKey()).child("available").setValue("available");
+//                    CalenderDialogClass calenderDialogClass = new CalenderDialogClass(activity);
+//                    calenderDialogClass.show();
+//
+//                }
+//                else
+//                {
+//                    holder.not_available.setChecked(true);
+//                    Stash.put(Config.currentModel, villa);
+//                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                    Villa villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
+//                    DatabaseReference propertyRef = database.getReference("RentApp").child("Villas");
+//                    propertyRef.child(villaModel.getKey()).child("available").setValue("not_available");
+//                }
+//            }
+//        });
         holder.not_available.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
+                if (b) {
+                    holder.not_available.setChecked(true);
+                    Stash.put(Config.currentModel, villa);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference propertyRef = database.getReference("RentApp").child("Villas");
+                    propertyRef.child(villa.getKey()).child("available").setValue("not_available".toString());
+
+                }
+                if(!b)
                 {
                     Stash.put(Config.currentModel, villa);
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    Villa villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
                     DatabaseReference propertyRef = database.getReference("RentApp").child("Villas");
-                    propertyRef.child(villaModel.getKey()).child("available").setValue("not_available".toString());
+                    propertyRef.child(villa.getKey()).child("available").setValue("available");
+//                    CalenderDialogClass calenderDialogClass = new CalenderDialogClass(activity, villa.getKey(), villa.available_dates);
+//                    calenderDialogClass.show();
 
                 }
+
             }
         });
+        holder.avaialble_for.setText(villa.getBedroom()+ " rooms left here");
+
+        if (villa.getAvailable().equals("not_available")) {
+            holder.not_available.setChecked(true);
+        } else {
+            holder.available.setChecked(true);
+        }
         Glide.with(ctx).load(villa.getImage()).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,12 +149,13 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
 
     @Override
     public int getItemCount() {
+
         return productModels.size();
     }
 
     public class GalleryPhotosViewHolder extends RecyclerView.ViewHolder {
 
-        TextView villa_name, verified;
+        TextView villa_name, verified, avaialble_for;
         ImageView image;
 
         RadioButton not_available, available;
@@ -123,6 +167,7 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
             not_available = itemView.findViewById(R.id.not_available);
             available = itemView.findViewById(R.id.available);
             verified = itemView.findViewById(R.id.verified);
+            avaialble_for = itemView.findViewById(R.id.avaialble_for);
         }
     }
 }

@@ -14,8 +14,8 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@drawable/villa"
             android:visibility="gone"
+            android:background="@drawable/villa"
             android:scaleType="fitXY" />
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
@@ -30,47 +30,74 @@
                 android:id="@+id/backpress"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:background="@drawable/bg_green_circle"
+                android:backgroundTint="#E1E1E1"
                 android:onClick="onBack"
                 android:padding="8dp"
-                android:backgroundTint="#E1E1E1"
-                android:background="@drawable/bg_green_circle"
                 android:src="@drawable/ic_back"
                 app:tint="#000" />
 
-            <ImageView
-                android:id="@+id/edit"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/pen" />
-                    </androidx.appcompat.widget.Toolbar>
+                android:layout_marginRight="20dp"
+
+                >
+
+                <ImageView
+                    android:id="@+id/edit"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bg_green_circle"
+                    android:backgroundTint="#E1E1E1"
+                    android:padding="9dp"
+                    android:src="@drawable/pencil"
+                    app:tint="@color/app_color" />
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/viewPager"
+            android:layout_marginTop="-30dp"
             android:background="@drawable/car_bg"
             android:backgroundTint="#F6F6F6"
-            android:layout_marginTop="-30dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
 
 
+                android:fontFamily="@font/lexend_semi_bold"
+                android:gravity="end"
+                android:text="500 $/month"
+                android:textColor="#BB5750"
+                android:textSize="14dp" />
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/image"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="-10dp"
                 android:layout_marginRight="45dp"
                 android:elevation="8dp"
                 android:fontFamily="@font/lexend_medium"
                 android:text="The Palm Beachfront Estate"
                 android:textColor="#000"
                 android:textSize="18dp" />
+
             <TextView
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
@@ -83,17 +110,18 @@
                 android:textColor="#000"
 
                 android:textSize="13dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/bedroom"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:visibility="gone"
                     android:layout_below="@+id/name_layout"
                     android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginTop="7dp"
                     android:layout_marginRight="5dp"
                     android:layout_toRightOf="@+id/distance"
@@ -124,17 +152,18 @@
                         app:tint="#000" />
 
                 </LinearLayout>
+
                 <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_below="@+id/name_layout"
                     android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
                     android:layout_marginTop="7dp"
+                    android:visibility="gone"
                     android:layout_marginRight="5dp"
                     android:layout_toRightOf="@+id/distance"
                     android:background="@drawable/stroke_bg"
                     android:backgroundTint="#CC87B4B0"
-                    android:visibility="gone"
 
                     android:orientation="horizontal">
 
@@ -161,12 +190,13 @@
                         app:tint="#000" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginStart="15dp"
-                    >
+                    android:visibility="gone">
+
                     <ImageView
                         android:id="@+id/location_img"
                         android:layout_width="15dp"
@@ -194,22 +224,8 @@
                         android:textSize="12dp" />
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="end"
 
-                    android:layout_marginRight="25dp"
 
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/lexend_semi_bold"
-                    android:text="500 $/month"
-                    android:textColor="#BB5750"
-                    android:textSize="14dp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -218,6 +234,7 @@
                 android:visibility="gone"
 
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/no_of_persons"
                     android:layout_width="match_parent"
@@ -232,19 +249,17 @@
                     android:text="Available for 4 persons"
                     android:textColor="#88B47A"
                     android:textSize="14dp" />
+
                 <ImageView
                     android:id="@+id/availability"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:visibility="gone"
-
-                    android:layout_gravity="end"
                     android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
                     android:layout_marginEnd="30dp"
                     android:src="@drawable/calendar" />
 
             </RelativeLayout>
-
 
 
             <androidx.cardview.widget.CardView
@@ -275,28 +290,26 @@
                 android:text="About"
                 android:textColor="#000"
                 android:textSize="18dp" />
+
             <io.github.glailton.expandabletextview.ExpandableTextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:collapsedLines="4"
-                app:animDuration="500"
-                app:readMoreText="Read More"
-                app:readLessText="Read Less"
-                app:textMode="line"
-                app:isExpanded="false"
-                app:expandType="layout"
                 android:layout_marginStart="17dp"
                 android:layout_marginEnd="15dp"
-                android:textColor="#000"
-                android:fontFamily="@font/lexend_light"
-                android:textSize="14dp"
-                app:ellipsizeTextColor="#bc8f8f"
                 android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lexend_light"
                 android:text="Lorem Ipsum is simpLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsumly dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. "
-                />
-
-
+                android:textColor="#000"
+                android:textSize="14dp"
+                app:animDuration="500"
+                app:collapsedLines="4"
+                app:ellipsizeTextColor="#bc8f8f"
+                app:expandType="layout"
+                app:isExpanded="false"
+                app:readLessText="Read Less"
+                app:readMoreText="Read More"
+                app:textMode="line" />
 
 
             <TextView
@@ -310,15 +323,19 @@
                 android:fontFamily="@font/lexend_semi_bold"
                 android:text="Villa Photos"
                 android:textColor="#000"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                />
+
             <TextView
                 android:id="@+id/house_rules"
                 android:layout_width="wrap_content"
@@ -344,6 +361,7 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Pet Friendly"
                 android:textColor="#000"
+
                 android:textSize="14dp" />
 
             <TextView
@@ -480,6 +498,7 @@
                         android:text="Garden"
                         android:textColor="#000" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/heater_layout"
                     android:layout_width="match_parent"
@@ -504,6 +523,7 @@
                         android:text="infinity pool"
                         android:textColor="#000" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/tv_layout"
                     android:layout_width="match_parent"
@@ -528,6 +548,7 @@
                         android:text="Gym"
                         android:textColor="#000" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/wifi_layout"
                     android:layout_width="match_parent"
@@ -634,7 +655,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -651,28 +671,30 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
+
                     android:layout_weight="1"
-                    android:textSize="14dp"
-                    android:textAllCaps="false"
-                    android:elevation="2dp"
                     android:background="@drawable/edit_bg"
+                    android:elevation="2dp"
                     android:text="Show on Map"
-                    android:textColor="@color/app_color" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/app_color"
+                    android:textSize="14dp" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/request_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:backgroundTint="@color/app_color"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
-                    android:onClick="booking"
                     android:background="@drawable/btn_bg"
+                    android:backgroundTint="@color/app_color"
+                    android:onClick="booking"
                     android:text="Rent"
-                    android:visibility="gone"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

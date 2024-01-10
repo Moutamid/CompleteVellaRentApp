@@ -69,14 +69,28 @@
             android:backgroundTint="#F6F6F6"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
 
+
+                android:fontFamily="@font/lexend_semi_bold"
+                android:gravity="end"
+                android:text="500 $/month"
+                android:textColor="#BB5750"
+                android:textSize="14dp" />
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/image"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="-10dp"
                 android:layout_marginRight="45dp"
                 android:elevation="8dp"
                 android:fontFamily="@font/lexend_medium"
@@ -211,22 +225,7 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="25dp"
 
-                    android:layout_marginBottom="10dp"
-
-                    android:fontFamily="@font/lexend_semi_bold"
-                    android:gravity="end"
-                    android:text="500 $/month"
-                    android:textColor="#BB5750"
-                    android:textSize="14dp" />
             </LinearLayout>
 
             <RelativeLayout
