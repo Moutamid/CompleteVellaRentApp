@@ -1,20 +1,26 @@
 package com.moutimid.vellarentapp.vellarentappadmin.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -35,6 +41,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,12 +75,14 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
     String token_admin;
     RecyclerView recyclerView;
     private GoogleMap mMap;
+    static DatabaseReference propertyRef;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     ImageView edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_villa_details_admin);
+        setContentView(R.layout.activity_villa_details_edit);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            getWindow().getDecorView().setSystemUiVisibility(View);
@@ -82,18 +92,25 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor("#202020"));
         }
+        fetch_data();
 
-
-        data_fetch();
     }
 
-    public void data_fetch() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetch_data();
+    }
+
+    public void fetch_data() {
         villaModel = (Villa) Stash.getObject(Config.currentModel, Villa.class);
+        propertyRef = database.getReference("RentApp").child("Villas").child(villaModel.getKey());
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
         recyclerView = findViewById(R.id.recyclerView);
+        edit = findViewById(R.id.edit);
         image = findViewById(R.id.image);
         map = findViewById(R.id.show_map);
         image = findViewById(R.id.image);
@@ -119,32 +136,18 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         TextView smoke_friendly = findViewById(R.id.smoke_friendly);
         TextView no_of_persons = findViewById(R.id.no_of_persons);
         TextView distance = findViewById(R.id.distance);
-        edit = findViewById(R.id.edit);
         distance.setText(Stash.getString("distance") + " km away from you");
         no_of_persons.setText("Available for " + villaModel.no_of_persons + " persons");
         no_of_persons.setVisibility(View.GONE);
         showImagesInRecyclerView();
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity.this, EditVillaActivity.class));
-            }
-        });
-        if (villaModel.getHouseRules() != null) {
+
+        if (!villaModel.rules.equals(",")) {
             house_rules.setVisibility(View.VISIBLE);
+//            pet_friendly.setVisibility(View.VISIBLE);
+//            pet_friendly.setText(villaModel.rules.trim());
         } else {
             house_rules.setVisibility(View.GONE);
-        }
-
-        if (villaModel.getHouseRules().isPetFriendly()) {
-            pet_friendly.setVisibility(View.VISIBLE);
-        } else {
             pet_friendly.setVisibility(View.GONE);
-        }
-        if (villaModel.getHouseRules().isSmokerFriendly()) {
-            smoke_friendly.setVisibility(View.VISIBLE);
-        } else {
-            smoke_friendly.setVisibility(View.GONE);
         }
         TextView propertyAmenitiesTitle = findViewById(R.id.property_amenities_title);
         LinearLayout dryerLayout = findViewById(R.id.dryer_layout);
@@ -161,7 +164,15 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         location.setText(villaModel.getTitle());
 // Request for Rent button
         Button requestButton = findViewById(R.id.request_button);
-
+        if (Stash.getBoolean("onetime")) {
+            displayTextInTextViews(villaModel.rules);
+        }
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VillaDetailsActivity.this, EditVillaActivity.class));
+            }
+        });
         if (villaModel.getPropertyAmenities() != null) {
             propertyAmenitiesTitle.setVisibility(View.VISIBLE);
         } else {
@@ -260,7 +271,9 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
             }
         });
+
     }
+
     public void onBack(View view) {
         onBackPressed();
     }
@@ -280,6 +293,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
         try {
             UserModel userModel = (UserModel) Stash.getObject("UserDetails", UserModel.class);
+
             notifcationBody.put("title", "Booking Alert");
             notifcationBody.put("message", userModel.name + " wants to book this Villa");
             notification.put("to", token); // Use the FCM token of the recipient device
@@ -385,11 +399,66 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public void showCustomDialogue(Context context, Villa villa) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.dialogue_layout, null);
+        builder.setView(view);
 
-        data_fetch();
+        final EditText editText1 = view.findViewById(R.id.editText1);
+        final EditText editText2 = view.findViewById(R.id.editText2);
 
+        editText1.setText(villa.getBill() + "");
+        editText2.setText(villa.getBedroom() + "");
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle button click
+                String text1 = editText1.getText().toString();
+                String text2 = editText2.getText().toString();
+                propertyRef.child("bill").setValue(Integer.parseInt(text1));
+                propertyRef.child("bedroom").setValue(Integer.parseInt(text2)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle button click
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
+    private void displayTextInTextViews(String inputString) {
+        // Split the input string by commas, considering optional spaces
+        String[] strings = inputString.split("\\s*,\\s*");
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+        Log.d("data", "st" + strings);
+        // Create TextViews for non-empty extracted strings and add them to the LinearLayout
+        for (String str : strings) {
+            // Skip empty strings
+
+            if (!str.trim().isEmpty()) {
+                TextView textView = new TextView(this);
+                Log.d("data", "str" + str);
+                textView.setText(str);
+                linearLayout.addView(textView);
+                Stash.put("onetime", false);
+
+            }
+        }
+    }
+
 }

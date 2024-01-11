@@ -106,6 +106,8 @@
                 <ImageView
                     android:id="@+id/availability"
                     android:layout_width="24dp"
+
+                    android:visibility="gone"
                     android:layout_height="24dp"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="end"
@@ -138,6 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_marginRight="5dp"
+            android:visibility="gone"
             android:layout_toRightOf="@+id/distance"
             android:background="@drawable/stroke_bg"
             android:backgroundTint="#CC87B4B0"
@@ -173,6 +176,7 @@
             android:layout_below="@+id/name_layout"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="7dp"
+            android:visibility="gone"
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@+id/distance"
             android:background="@drawable/stroke_bg"
@@ -186,6 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="12dp"
+                android:visibility="gone"
                 android:fontFamily="@font/lexend_light"
                 android:maxLines="1"
                 android:text="4"
@@ -375,6 +380,7 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
+
                 android:id="@+id/house_rules"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -382,13 +388,21 @@
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/lexend_semi_bold"
                 android:text="House Rules"
                 android:textColor="#fff"
                 android:textSize="18dp" />
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical" />
+
             <TextView
+
                 android:id="@+id/pet_friendly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -397,36 +411,38 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lexend_light"
-            android:text="Pet Friendly"
-            android:textColor="@color/black"
+                android:text="Pet Friendly"
+                android:textColor="#000"
+                android:textSize="14dp"
+                android:visibility="gone" />
 
-            android:textSize="14dp" />
-        <TextView
-            android:id="@+id/smoke_friendly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/address"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="Smoke Friendly"
-            android:textColor="@color/black"
+            <TextView
+                android:id="@+id/smoke_friendly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginStart="17dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="Smoke Friendly"
+                android:textColor="#000"
+                android:textSize="14dp"
 
-            android:textSize="14dp" />
+                android:visibility="gone" />
 
 
-    <TextView
-        android:id="@+id/property_amenities_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/address"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/lexend_semi_bold"
-        android:text="Property Ameneities"
+            <TextView
+                android:id="@+id/property_amenities_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/lexend_semi_bold"
+                android:text="Property Ameneities"
         android:textColor="#fff"
         android:textSize="18dp" />
 

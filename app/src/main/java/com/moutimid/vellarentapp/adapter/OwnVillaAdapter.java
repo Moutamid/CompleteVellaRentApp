@@ -66,7 +66,7 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
                     Stash.put(Config.currentModel, villa);
                     String.format("%.2f ", villa.distance);
                     Stash.put("distance",villa);
-
+Stash.put("onetime", true);
                     ctx.startActivity(new Intent(ctx, VillaDetailsActivity.class));
                 } else {
                     Toast.makeText(ctx, "Villa is not available yet", Toast.LENGTH_SHORT).show();

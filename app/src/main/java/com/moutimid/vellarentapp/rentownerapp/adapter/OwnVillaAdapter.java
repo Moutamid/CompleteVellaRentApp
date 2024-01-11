@@ -142,6 +142,8 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
             @Override
             public void onClick(View view) {
                 Stash.put(Config.currentModel, villa);
+                Stash.put("onetime", true);
+
                 ctx.startActivity(new Intent(ctx, VillaDetailsActivity.class));
             }
         });

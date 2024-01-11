@@ -350,6 +350,13 @@
                 android:textColor="#000"
                 android:textSize="18dp" />
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical" />
+
             <TextView
                 android:id="@+id/pet_friendly"
                 android:layout_width="wrap_content"
@@ -361,7 +368,7 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Pet Friendly"
                 android:textColor="#000"
-
+                android:visibility="gone"
                 android:textSize="14dp" />
 
             <TextView
@@ -375,6 +382,7 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Smoke Friendly"
                 android:textColor="#000"
+                android:visibility="gone"
 
                 android:textSize="14dp" />
 

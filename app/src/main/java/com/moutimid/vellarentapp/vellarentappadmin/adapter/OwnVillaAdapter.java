@@ -60,7 +60,9 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
                     Stash.put(Config.currentModel, villa);
                     String.format("%.2f ", villa.distance);
                     Stash.put("distance",villa);
-                    ctx.startActivity(new Intent(ctx, VillaDetailsActivity.class));
+                Stash.put("onetime", true);
+
+                ctx.startActivity(new Intent(ctx, VillaDetailsActivity.class));
               }
         });
 

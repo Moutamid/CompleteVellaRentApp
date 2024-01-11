@@ -221,7 +221,7 @@ public class VillaFragment extends Fragment {
                             String imageUrl = imageSnapshot.getValue(String.class);
                             imagesMap.put(imageKey, imageUrl);
                         }
-
+villaModel.rules = ds.child("rules").getValue().toString();
                         villaModel.setImages(imagesMap);
                         productModelList.add(villaModel);
                         loading.setVisibility(View.GONE);

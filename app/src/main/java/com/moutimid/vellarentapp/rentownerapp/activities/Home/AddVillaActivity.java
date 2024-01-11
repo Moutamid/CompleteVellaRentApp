@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -53,6 +56,7 @@ import com.moutimid.vellarentapp.rentownerapp.model.VillaAmenities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class AddVillaActivity extends AppCompatActivity {
@@ -114,6 +118,9 @@ public class AddVillaActivity extends AppCompatActivity {
     public static double lat;
     public static double lng;
     String token;
+    private LinearLayout linearLayout;
+    private Button addButtonRule, getAdress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +128,9 @@ public class AddVillaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_villa);
         propertyRef = database.getReference("RentApp").child("Villas");
         propertyKey = propertyRef.push().getKey();
+        getAdress = findViewById(R.id.getAdress);
+        linearLayout = findViewById(R.id.linearLayout);
+        addButtonRule = findViewById(R.id.addButton);
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference("images");
@@ -179,8 +189,16 @@ public class AddVillaActivity extends AppCompatActivity {
         selectedImageUris = new ArrayList<>();
         imageAdapter = new ImageAdapter(selectedImageUris);
         recyclerView.setAdapter(imageAdapter);
-
-
+        getAdress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!latEditText.getText().toString().isEmpty() && !lngEditText.getText().toString().isEmpty()) {
+                    location_data();
+                } else {
+                    Toast.makeText(AddVillaActivity.this, "Please Enter Latitude and Longitude", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,11 +222,7 @@ public class AddVillaActivity extends AppCompatActivity {
 //                }
 
                 // Check if no EditText is empty
-                if (nameEditText.getText().toString().isEmpty() || descriptionEditText.getText().toString().isEmpty() ||
-                        bedroomEditText.getText().toString().isEmpty() ||
-                        bathroomEditText.getText().toString().isEmpty() || latEditText.getText().toString().isEmpty() ||
-                        lngEditText.getText().toString().isEmpty() || locationTitleEditText.getText().toString().isEmpty() ||
-                        billEditText.getText().toString().isEmpty()) {
+                if (nameEditText.getText().toString().isEmpty() || descriptionEditText.getText().toString().isEmpty() || bedroomEditText.getText().toString().isEmpty() || bathroomEditText.getText().toString().isEmpty() || latEditText.getText().toString().isEmpty() || lngEditText.getText().toString().isEmpty() || locationTitleEditText.getText().toString().isEmpty() || billEditText.getText().toString().isEmpty()) {
                     Toast.makeText(AddVillaActivity.this, "Please give complete details", Toast.LENGTH_SHORT).show();
                     return;
                     // Handle the case when an EditText is empty
@@ -252,7 +266,7 @@ public class AddVillaActivity extends AppCompatActivity {
                 property.name = nameEditText.getText().toString();
                 property.description = descriptionEditText.getText().toString();
                 property.bedroom = Integer.parseInt(bedroomEditText.getText().toString());
-                property.bathRoom = Integer.parseInt(bathroomEditText.getText().toString());
+                property.bathRoom = Integer.parseInt("87");
                 property.lat = Double.parseDouble(latEditText.getText().toString());
                 property.lng = Double.parseDouble(lngEditText.getText().toString());
                 property.title = locationTitleEditText.getText().toString();
@@ -299,9 +313,10 @@ public class AddVillaActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Uri downloadImageUri = task.getResult();
                         if (downloadImageUri != null) {
-
                             property.image = downloadImageUri.toString();
                             property.userName = name;
+
+                            property.rules = String.valueOf(getData());
                             property.no_of_persons = 23;
                             property.available = "not_available";
                             property.available_dates = "";
@@ -327,6 +342,13 @@ public class AddVillaActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        addButtonRule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addEditText();
             }
         });
     }
@@ -471,6 +493,54 @@ public class AddVillaActivity extends AppCompatActivity {
         }
     };
 
+    private void addEditText() {
+        EditText editText = new EditText(this);
+        linearLayout.addView(editText);
+
+        location_data();
+    }
+
+    public void location_data() {
+        try {
+            double latitude = Double.parseDouble(latEditText.getText().toString()); // Replace with your latitude
+            double longitude = Double.parseDouble(lngEditText.getText().toString()); // Replace with your longitude
+
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+            locationTitleEditText.setText(address);
+        } catch (Exception e) {
+            Toast.makeText(this, "error: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private StringBuilder getData() {
+        StringBuilder data = new StringBuilder();
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            View view = linearLayout.getChildAt(i);
+            if (view instanceof EditText) {
+                EditText editText = (EditText) view;
+                String text = editText.getText().toString();
+                data.append(text).append(" , ");
+
+            }
+        }
+
+
+        // Do something with the data
+        return data;
+    }
 }
 
 

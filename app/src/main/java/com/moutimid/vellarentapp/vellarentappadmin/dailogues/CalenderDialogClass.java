@@ -58,6 +58,8 @@ public class CalenderDialogClass extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
+                Stash.put("onetime", true);
+
                 c.startActivity(new Intent(c, VillaDetailsActivity.class));
             }
         });

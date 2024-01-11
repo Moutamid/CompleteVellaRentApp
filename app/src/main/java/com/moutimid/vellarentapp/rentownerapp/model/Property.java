@@ -9,6 +9,7 @@ public class Property {
     public String description;
     public String token;
     public String image;
+    public String rules;
     public String key;
     public double lat;
     public double lng;

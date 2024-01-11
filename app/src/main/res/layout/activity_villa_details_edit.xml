@@ -344,11 +344,18 @@
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/lexend_semi_bold"
                 android:text="House Rules"
                 android:textColor="#000"
                 android:textSize="18dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical" />
 
             <TextView
                 android:id="@+id/pet_friendly"
@@ -361,7 +368,7 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Pet Friendly"
                 android:textColor="#000"
-
+android:visibility="gone"
                 android:textSize="14dp" />
 
             <TextView
@@ -375,6 +382,7 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Smoke Friendly"
                 android:textColor="#000"
+                android:visibility="gone"
 
                 android:textSize="14dp" />
 

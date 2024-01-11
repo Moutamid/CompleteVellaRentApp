@@ -86,7 +86,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/edit_bg"
-
+            android:visibility="gone"
+            android:text="text"
             android:hint="@string/bathroom"
             android:inputType="number"
             android:padding="10dp" />
@@ -125,13 +126,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/edit_bg"
-            android:editable="false"
-            android:focusable="false"
             android:hint="@string/latitude"
             android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:visibility="gone" />
-
+            android:padding="10dp" />
         <EditText
             android:id="@+id/lng_edit_text"
             android:layout_width="match_parent"
@@ -140,16 +137,19 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/edit_bg"
-            android:editable="false"
-            android:focusable="false"
             android:hint="@string/longitude"
 
             android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:visibility="gone" />
+            android:padding="10dp" />
 
+        <Button
+            android:id="@+id/getAdress"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:text="Get Address"
+            android:textAllCaps="false" />
 
-        =
 
         <EditText
             android:id="@+id/bill_edit_text"
@@ -193,10 +193,32 @@
                 android:text="House Rules"
                 android:textSize="18dp" />
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Enter rule here" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add more rules" />
+
             <CheckBox
                 android:id="@+id/pet_friendly_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:visibility="gone"
+
                 android:layout_marginTop="10dp"
                 android:text="@string/pet_friendly" />
 
@@ -204,6 +226,7 @@
                 android:id="@+id/smoker_friendly_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:text="@string/smoker_friendly" />
 
         </LinearLayout>

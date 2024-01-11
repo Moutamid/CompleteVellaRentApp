@@ -93,6 +93,7 @@ alertDialog.setCancelable(true);
                 Stash.put(Config.currentModel, villa);
                 String.format("%.2f ", villa.distance);
                 Stash.put("distance", villa);
+                Stash.put("onetime", true);
                 ctx.startActivity(new Intent(ctx, VillaDetailsActivity.class));
             }
         });

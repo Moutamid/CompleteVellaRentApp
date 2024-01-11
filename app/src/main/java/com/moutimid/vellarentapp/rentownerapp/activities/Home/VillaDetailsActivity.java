@@ -138,20 +138,14 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         no_of_persons.setText("Available for " + villaModel.no_of_persons + " persons");
         no_of_persons.setVisibility(View.GONE);
         showImagesInRecyclerView();
-        if (villaModel.getHouseRules() != null) {
+
+        if (!villaModel.rules.equals(",")) {
             house_rules.setVisibility(View.VISIBLE);
+//            pet_friendly.setVisibility(View.VISIBLE);
+//            pet_friendly.setText(villaModel.rules.trim());
         } else {
             house_rules.setVisibility(View.GONE);
-        }
-        if (villaModel.getHouseRules().isPetFriendly()) {
-            pet_friendly.setVisibility(View.VISIBLE);
-        } else {
             pet_friendly.setVisibility(View.GONE);
-        }
-        if (villaModel.getHouseRules().isSmokerFriendly()) {
-            smoke_friendly.setVisibility(View.VISIBLE);
-        } else {
-            smoke_friendly.setVisibility(View.GONE);
         }
         TextView propertyAmenitiesTitle = findViewById(R.id.property_amenities_title);
         LinearLayout dryerLayout = findViewById(R.id.dryer_layout);
@@ -168,6 +162,9 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         location.setText(villaModel.getTitle());
 // Request for Rent button
         Button requestButton = findViewById(R.id.request_button);
+        if (Stash.getBoolean("onetime")) {
+            displayTextInTextViews(villaModel.rules);
+        }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -439,6 +436,28 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void displayTextInTextViews(String inputString) {
+        // Split the input string by commas, considering optional spaces
+        String[] strings = inputString.split("\\s*,\\s*");
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+linearLayout.removeAllViews();
+        Log.d("data", "st" + strings);
+        // Create TextViews for non-empty extracted strings and add them to the LinearLayout
+        for (String str : strings) {
+            // Skip empty strings
+
+            if (!str.trim().isEmpty()) {
+                TextView textView = new TextView(this);
+                Log.d("data", "str" + str);
+
+                textView.setText(str);
+                linearLayout.addView(textView);
+                Stash.put("onetime", false);
+
+            }
+        }
     }
 
 }

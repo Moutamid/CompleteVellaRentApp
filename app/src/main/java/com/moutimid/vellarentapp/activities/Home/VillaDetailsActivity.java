@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -139,20 +140,13 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         numberPicker.setTextColor(Color.WHITE);
 
         numberPicker.setWrapSelectorWheel(true);
-        if (villaModel.getHouseRules() != null) {
+        if (!villaModel.rules.equals(",")) {
             house_rules.setVisibility(View.VISIBLE);
+//            pet_friendly.setVisibility(View.VISIBLE);
+//            pet_friendly.setText(villaModel.rules.trim());
         } else {
             house_rules.setVisibility(View.GONE);
-        }
-        if (villaModel.getHouseRules().isPetFriendly()) {
-            pet_friendly.setVisibility(View.VISIBLE);
-        } else {
             pet_friendly.setVisibility(View.GONE);
-        }
-        if (villaModel.getHouseRules().isSmokerFriendly()) {
-            smoke_friendly.setVisibility(View.VISIBLE);
-        } else {
-            smoke_friendly.setVisibility(View.GONE);
         }
         TextView propertyAmenitiesTitle = findViewById(R.id.property_amenities_title);
         LinearLayout dryerLayout = findViewById(R.id.dryer_layout);
@@ -228,7 +222,9 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         } else {
             air_layout.setVisibility(View.GONE);
         }
-
+        if (Stash.getBoolean("onetime")) {
+            displayTextInTextViews(villaModel.rules);
+        }
         availability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -448,6 +444,29 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
         } else {
             Toast.makeText(VillaDetailsActivity.this, "Invalid Coordinates to show marker", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void displayTextInTextViews(String inputString) {
+        // Split the input string by commas, considering optional spaces
+        String[] strings = inputString.split("\\s*,\\s*");
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+        Log.d("data", "st" + strings);
+        // Create TextViews for non-empty extracted strings and add them to the LinearLayout
+        for (String str : strings) {
+            // Skip empty strings
+
+            if (!str.trim().isEmpty()) {
+                TextView textView = new TextView(this);
+                Log.d("data", "str" + str);
+
+                textView.setText(str);
+                textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+
+                linearLayout.addView(textView);
+                Stash.put("onetime", false);
+
+            }
         }
     }
 }

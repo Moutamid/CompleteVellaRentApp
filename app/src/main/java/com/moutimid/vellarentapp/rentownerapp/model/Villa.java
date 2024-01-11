@@ -9,6 +9,7 @@ public class Villa {
     private HouseRules houseRules;
     private Location location;
     private PropertyAmenities propertyAmenities;
+    public String rules;
     private PropertyDetails propertyDetails;
     private int area;
     private int bathRoom;

@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -62,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -127,6 +131,9 @@ public class EditVillaActivity extends AppCompatActivity {
     Villa villaModel;
     List<String> imageUrls = new ArrayList<>();
 
+    private LinearLayout linearLayout;
+    private Button addButtonRule, getAdress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +161,10 @@ public class EditVillaActivity extends AppCompatActivity {
                 token = task.getResult();
             }
         });
+        getAdress = findViewById(R.id.getAdress);
+        linearLayout = findViewById(R.id.linearLayout);
+        addButtonRule = findViewById(R.id.addButton);
+
 
         placesClient = Places.createClient(this);
         initAutoCompleteTextView();
@@ -218,7 +229,7 @@ public class EditVillaActivity extends AppCompatActivity {
         tvCheckbox.setChecked(villaModel.getPropertyAmenities().isTv());
         washingMachineCheckbox.setChecked(villaModel.getPropertyAmenities().isWashingMachine());
         wifiCheckbox.setChecked(villaModel.getPropertyAmenities().isWifi());
-
+        Log.d("text", villaModel.rules + " mn");
 // Set values for other checkboxes
 
 // Setting values for spinners
@@ -226,6 +237,16 @@ public class EditVillaActivity extends AppCompatActivity {
 //        steamShowerSpinner.setSelection(villaModel.getPropertyDetails().getSteamShower());
 //        toiletSpinner.setSelection(villaModel.getPropertyDetails().getToilet());
 //        roomTypeSpinner.setSelection(villaModel.getRoomType());
+        getAdress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!latEditText.getText().toString().isEmpty() && !lngEditText.getText().toString().isEmpty()) {
+                    location_data();
+                } else {
+                    Toast.makeText(EditVillaActivity.this, "Please Enter Latitude and Longitude", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,6 +313,7 @@ public class EditVillaActivity extends AppCompatActivity {
 
 // Set the property details
                 property.name = nameEditText.getText().toString();
+                property.rules = String.valueOf(getData());
                 property.description = descriptionEditText.getText().toString();
                 property.bedroom = Integer.parseInt(bedroomEditText.getText().toString());
                 property.bathRoom = Integer.parseInt(bathroomEditText.getText().toString());
@@ -360,17 +382,29 @@ public class EditVillaActivity extends AppCompatActivity {
                         saveImagesToFirebase(lodingbar, propertyKey);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(EditVillaActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditVillaActivity.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
-                                    lodingbar.dismiss();
-                                }
-                            });
-                        }
+                        lodingbar.dismiss();
+                    }
+                });
+            }
 //                    }
 //                });
 //            }
+        });
+
+        Log.d("dataaaa", villaModel.rules + "  test");
+        String[] strings = villaModel.rules.split(",\\s*");
+        for (String str : strings) {
+            addEditText(str.trim());
+        }
+        addButtonRule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addEditText();
+            }
         });
     }
 
@@ -393,6 +427,8 @@ public class EditVillaActivity extends AppCompatActivity {
             selectedImageUris.add(image_profile_str);
 
         }
+
+
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
@@ -452,8 +488,10 @@ public class EditVillaActivity extends AppCompatActivity {
                     villa.setImages(imagesMap);
                     // Save the Villa instance in Stash
                     Stash.put(Config.currentModel, villa);
+                    Stash.put("onetime", true);
+
                 }
-                Toast.makeText(EditVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EditVillaActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
                 loadingbar.dismiss();
                 finish();
             }
@@ -550,6 +588,62 @@ public class EditVillaActivity extends AppCompatActivity {
 
         }
     };
+
+    private void addEditText() {
+        EditText editText = new EditText(this);
+        linearLayout.addView(editText);
+
+        location_data();
+    }
+
+    public void location_data() {
+        try {
+            double latitude = Double.parseDouble(latEditText.getText().toString()); // Replace with your latitude
+            double longitude = Double.parseDouble(lngEditText.getText().toString()); // Replace with your longitude
+
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+            locationTitleEditText.setText(address);
+        } catch (Exception e) {
+            Toast.makeText(this, "error: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private StringBuilder getData() {
+        StringBuilder data = new StringBuilder();
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            View view = linearLayout.getChildAt(i);
+            if (view instanceof EditText) {
+                EditText editText = (EditText) view;
+                String text = editText.getText().toString();
+                data.append(text).append(" \n ");
+
+            }
+        }
+
+
+        // Do something with the data
+        return data;
+    }
+
+    private void addEditText(String initialText) {
+        Log.d("dataaa", initialText + "  ");
+        EditText editText = new EditText(this);
+        editText.setText(initialText); // Set the initial text for the EditText
+        linearLayout.addView(editText);
+    }
 
 }
 

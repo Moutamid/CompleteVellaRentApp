@@ -6,6 +6,7 @@ public class Villa {
     private PropertyAmenities propertyAmenities;
     private PropertyDetails propertyDetails;
     private int area;
+    public String rules;
     private int bathRoom;
     private int bedroom;
     private String description;

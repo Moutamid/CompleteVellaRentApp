@@ -6,6 +6,8 @@ import java.util.Map;
 public class Villa {
     private HouseRules houseRules;
     private Location location;
+    public String rules;
+
     private PropertyAmenities propertyAmenities;
     private PropertyDetails propertyDetails;
     private int area;

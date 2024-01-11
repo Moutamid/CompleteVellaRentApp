@@ -89,6 +89,7 @@
             android:id="@+id/bathroom_edit_text"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:visibility="gone"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
@@ -132,13 +133,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/edit_bg"
-            android:editable="false"
-            android:focusable="false"
             android:hint="@string/latitude"
             android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:visibility="gone" />
-
+            android:padding="10dp" />
         <EditText
             android:id="@+id/lng_edit_text"
             android:layout_width="match_parent"
@@ -147,16 +144,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/edit_bg"
-            android:editable="false"
-            android:focusable="false"
             android:hint="@string/longitude"
 
             android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:visibility="gone" />
+            android:padding="10dp" />
 
-
-        =
+        <Button
+            android:id="@+id/getAdress"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:text="Get Address"
+            android:textAllCaps="false" />
 
         <EditText
             android:id="@+id/bill_edit_text"
@@ -198,11 +197,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lexend_semi_bold"
+                android:visibility="gone"
                 android:text="House Rules"
                 android:textSize="18dp" />
 
             <CheckBox
                 android:id="@+id/pet_friendly_checkbox"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
@@ -211,8 +212,45 @@
             <CheckBox
                 android:id="@+id/smoker_friendly_checkbox"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="30dp"
                 android:text="@string/smoker_friendly" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lexend_semi_bold"
+                    android:text="House Rules"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Enter rule here" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/addButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add more rules" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
