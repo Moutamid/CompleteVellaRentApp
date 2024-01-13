@@ -23,6 +23,7 @@ import java.util.List;
 public class FavouriteFragment extends Fragment {
 
     RecyclerView content_rcv;
+
     public List<Villa> productModelList = new ArrayList<>();
     FavouriteVillaAdapter retaurantAdapter;
     TextView no_text;

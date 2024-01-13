@@ -27,6 +27,7 @@ import com.moutimid.vellarentapp.model.UserModel;
 
 public class ProfileFragment extends Fragment {
     TextView name, email;
+
     String userID;
     LinearLayout logout;
     Button login;

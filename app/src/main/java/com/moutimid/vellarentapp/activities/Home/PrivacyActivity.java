@@ -9,7 +9,10 @@ import android.view.View;
 
 import com.moutamid.vellarentapp.R;
 
+
+
 public class PrivacyActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

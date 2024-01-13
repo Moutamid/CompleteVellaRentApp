@@ -73,6 +73,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_villa_details);

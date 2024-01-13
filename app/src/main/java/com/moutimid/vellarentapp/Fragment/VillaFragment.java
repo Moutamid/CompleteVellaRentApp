@@ -206,6 +206,7 @@ public class VillaFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     Villa villaModel = ds.getValue(Villa.class);
+
                     Log.d("dataa", villaModel.verified + " "+ villaModel.getBedroom());
                     if (villaModel.verified && villaModel.getBedroom() != 0) {
                         DataSnapshot propertyAmenities1 = ds.child("PropertyAmenities");

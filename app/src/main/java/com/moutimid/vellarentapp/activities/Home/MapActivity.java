@@ -17,6 +17,7 @@ import com.moutimid.vellarentapp.model.LocationModel;
 
 import java.util.ArrayList;
 
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

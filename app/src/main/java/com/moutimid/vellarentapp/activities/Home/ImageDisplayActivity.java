@@ -10,6 +10,7 @@ import com.moutamid.vellarentapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ImageDisplayActivity extends AppCompatActivity {
 
     @Override
