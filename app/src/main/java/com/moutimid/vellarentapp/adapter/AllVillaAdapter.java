@@ -1,6 +1,7 @@
 package com.moutimid.vellarentapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class AllVillaAdapter extends RecyclerView.Adapter<AllVillaAdapter.Galler
 
         Villa villa = productModels.get(position);
         double distance = calculateDistance(Config.lat, Config.lng, villa.getLat(), villa.getLng());
+        Log.d("distance", distance+"  distance");
+//        if(distance<10)
+
         holder.villa_name.setText(villa.getName());
         holder.bill.setText("$" + villa.getBill() + "/month");
         holder.no_of_bedroom.setText(villa.getBedroom() + "");

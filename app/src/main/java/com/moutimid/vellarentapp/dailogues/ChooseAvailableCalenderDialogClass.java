@@ -3,12 +3,15 @@ package com.moutimid.vellarentapp.dailogues;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.fxn.stash.Stash;
 import com.moutamid.vellarentapp.R;
@@ -19,6 +22,8 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -57,8 +62,39 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(R.layout.calender_dailogue);
         Button next_button = findViewById(R.id.next_button);
+        Button tonight_btn = findViewById(R.id.tonight_btn);
+        Button cancel_btn = findViewById(R.id.cancel_btn);
         calendarView = findViewById(R.id.calendarView);
         selectedDates = new ArrayList<>();
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VillaFragment.getRecommendedProducts();
+                dismiss();
+            }
+        });
+        tonight_btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String formattedDate1 = currentDate.format(formatter);
+                if (VillaFragment.address.equals("")) {
+                    VillaFragment.filter_dates(formattedDate1);
+                    next_button.setText("Search for " + formattedDate1);
+                    VillaFragment.searched_date.setText("Tonight");
+
+                    dismiss();
+
+                } else {
+                    next_button.setText("Search for " + formattedDate1);
+                    VillaFragment.searched_date.setText("Tonight");
+                    VillaFragment.filter_both(formattedDate1, VillaFragment.address);
+                    dismiss();
+                }
+            }
+        });
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -88,7 +124,10 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
                     VillaFragment.searched_date.setText(formattedDate);
                     if (VillaFragment.address.equals("")) {
                         VillaFragment.filter_dates(formattedDate);
+                        next_button.setText("Search for " + formattedDate);
+
                     } else {
+                        next_button.setText("Search for " + formattedDate);
                         VillaFragment.filter_both(formattedDate, VillaFragment.address);
                     }
 //                    } catch (Exception e) {
@@ -115,8 +154,13 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
         next_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (next_button.getText().toString().equals("Search")) {
+                    Toast.makeText(c, "Please select specific date for searh", Toast.LENGTH_SHORT).show();
+                } else {
+                    VillaFragment.getRecommendedProducts();
+                    dismiss();
 
-                dismiss();
+                }
             }
         });
     }

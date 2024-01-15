@@ -12,7 +12,18 @@
         android:layout_height="wrap_content"
         android:background="#000"
         android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/nearby_villa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexend_semi_bold"
+            android:text="Show nearby villa"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:textColor="#fff"
+            android:textSize="15dp" />
         <LinearLayout
 
             android:id="@+id/layout1"
@@ -27,16 +38,23 @@
             android:paddingLeft="10dp">
 
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="@font/lexend_medium"
-                android:text="Where"
-                android:textColor="#fff"
-                android:textSize="14dp" />
+                android:layout_weight="1">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/lexend_medium"
+                    android:text="Where "
+                    android:textColor="#fff"
+                    android:textSize="14dp" />
+
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,13 +87,13 @@
                 android:id="@+id/location_title_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
                 android:hint="Enter Location"
                 android:cursorVisible="true"
                 android:textCursorDrawable="@color/white"
                 android:maxLines="3"
                 android:padding="12dp"
+
                 android:textColor="#C4C2C2"
                 android:textColorHint="#C4C2C2"
                 android:textSize="12dp" />
@@ -90,8 +108,8 @@
                 android:layout_weight="2"
                 android:fontFamily="@font/lexend_medium"
                 android:gravity="center"
-
-                android:text="Tonight"
+                android:hint="Select date"
+                android:textColorHint="#C4c2b0"
                 android:textColor="#C4C2C2"
                 android:textSize="12dp" />
 

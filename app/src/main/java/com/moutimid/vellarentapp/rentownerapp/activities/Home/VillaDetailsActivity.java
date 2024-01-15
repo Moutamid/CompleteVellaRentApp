@@ -75,7 +75,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     static DatabaseReference propertyRef;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    ImageView edit;
+    ImageView edit, delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +109,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         mapFragment.getMapAsync(this);
         recyclerView = findViewById(R.id.recyclerView);
         edit = findViewById(R.id.edit);
+        delete = findViewById(R.id.delete);
         image = findViewById(R.id.image);
         map = findViewById(R.id.show_map);
         image = findViewById(R.id.image);
@@ -138,7 +139,36 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         no_of_persons.setText("Available for " + villaModel.no_of_persons + " persons");
         no_of_persons.setVisibility(View.GONE);
         showImagesInRecyclerView();
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new android.app.AlertDialog.Builder(VillaDetailsActivity.this)
+                        .setTitle("Are you sure?")
+                        .setMessage("You want to delete this Villa permanently.")
+                        .setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Config.showProgressDialog(VillaDetailsActivity.this);
+                                propertyRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Config.dismissProgressDialog();
+                                            finish();
+                                        } else {
+                                            Config.dismissProgressDialog();
+                                            Toast.makeText(VillaDetailsActivity.this, "Something went worng", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .setIcon(R.mipmap.ic_launcher_round)
+                        .show();
 
+            }
+        });
         if (!villaModel.rules.equals(",")) {
             house_rules.setVisibility(View.VISIBLE);
 //            pet_friendly.setVisibility(View.VISIBLE);

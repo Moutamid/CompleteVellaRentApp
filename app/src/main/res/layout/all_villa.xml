@@ -5,6 +5,8 @@
     android:layout_height="230dp"
     android:layout_margin="8dp"
     app:cardElevation="2dp"
+    android:id="@+id/cardView"
+    android:visibility="gone"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp">
 

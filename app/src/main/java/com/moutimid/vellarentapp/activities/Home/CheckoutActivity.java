@@ -165,7 +165,6 @@ public class CheckoutActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Config.alertDialogue(CheckoutActivity.this, "Thank you for your reservation.", "You will receive a confirmation 48h before your booking date", true);
                                             Config.dismissProgressDialog();
-                                            startActivity(new Intent(CheckoutActivity.this, MainActivity.class));
                                         }
                                     });
 

@@ -77,7 +77,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     static DatabaseReference propertyRef;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    ImageView edit;
+    ImageView edit, delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +140,7 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
         no_of_persons.setText("Available for " + villaModel.no_of_persons + " persons");
         no_of_persons.setVisibility(View.GONE);
         showImagesInRecyclerView();
+        delete = findViewById(R.id.delete);
 
         if (!villaModel.rules.equals(",")) {
             house_rules.setVisibility(View.VISIBLE);
@@ -149,6 +150,37 @@ public class VillaDetailsActivity extends AppCompatActivity implements OnMapRead
             house_rules.setVisibility(View.GONE);
             pet_friendly.setVisibility(View.GONE);
         }
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new android.app.AlertDialog.Builder(com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity.this)
+                        .setTitle("Are you sure?")
+                        .setMessage("You want to delete this Villa permanently")
+                        .setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Config.showProgressDialog(com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity.this);
+                                propertyRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Config.dismissProgressDialog();
+                                            finish();
+                                        } else {
+                                            Config.dismissProgressDialog();
+                                            Toast.makeText(com.moutimid.vellarentapp.vellarentappadmin.activities.VillaDetailsActivity.this, "Something went worng", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .setIcon(R.mipmap.ic_launcher_round)
+                        .show();
+
+            }
+        });
+
         TextView propertyAmenitiesTitle = findViewById(R.id.property_amenities_title);
         LinearLayout dryerLayout = findViewById(R.id.dryer_layout);
         LinearLayout furnishedLayout = findViewById(R.id.furnished_layout);
