@@ -12,18 +12,7 @@
         android:layout_height="wrap_content"
         android:background="#000"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/nearby_villa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:fontFamily="@font/lexend_semi_bold"
-            android:text="Show nearby villa"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:textColor="#fff"
-            android:textSize="15dp" />
+
         <LinearLayout
 
             android:id="@+id/layout1"
@@ -82,21 +71,30 @@
 
             android:paddingEnd="10dp">
 
-
-            <AutoCompleteTextView
-                android:id="@+id/location_title_edit_text"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter Location"
-                android:cursorVisible="true"
-                android:textCursorDrawable="@color/white"
-                android:maxLines="3"
-                android:padding="12dp"
+                android:orientation="vertical"
 
-                android:textColor="#C4C2C2"
-                android:textColorHint="#C4C2C2"
-                android:textSize="12dp" />
+                >
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/location_title_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:hint="Enter Location"
+                    android:maxLines="3"
+                    android:padding="12dp"
+                    android:textColor="#C4C2C2"
+
+                    android:textColorHint="#C4C2C2"
+                    android:textCursorDrawable="@color/white"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
 
 
             <TextView
@@ -117,11 +115,26 @@
         </LinearLayout>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/nearby_villa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/lexend_semi_bold"
+        android:paddingTop="10dp"
+        android:text="Show nearby villa"
+        android:textColor="#ADE4AF"
+        android:textSize="14dp" />
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_below="@+id/header_text">
 
         <RelativeLayout

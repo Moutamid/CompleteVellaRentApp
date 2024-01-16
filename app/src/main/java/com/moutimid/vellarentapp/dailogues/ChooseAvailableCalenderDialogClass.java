@@ -46,7 +46,7 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
     MaterialCalendarView calendarView;
     Activity c;
     private Button selectButton;
-
+    public static String formattedDate;
     private List<CalendarDay> selectedDates;
 
     public ChooseAvailableCalenderDialogClass(Activity a) {
@@ -66,10 +66,11 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
         Button cancel_btn = findViewById(R.id.cancel_btn);
         calendarView = findViewById(R.id.calendarView);
         selectedDates = new ArrayList<>();
+        VillaFragment villaFragment = new VillaFragment();
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VillaFragment.getRecommendedProducts();
+//                villaFragment.getRecommendedProducts();
                 dismiss();
             }
         });
@@ -80,17 +81,17 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
                 LocalDate currentDate = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String formattedDate1 = currentDate.format(formatter);
-                if (VillaFragment.address.equals("")) {
-                    VillaFragment.filter_dates(formattedDate1);
+                if (villaFragment.address.equals("")) {
+                    villaFragment.filter_dates(formattedDate1);
                     next_button.setText("Search for " + formattedDate1);
-                    VillaFragment.searched_date.setText("Tonight");
+                    villaFragment.searched_date.setText("Tonight");
 
                     dismiss();
 
                 } else {
                     next_button.setText("Search for " + formattedDate1);
-                    VillaFragment.searched_date.setText("Tonight");
-                    VillaFragment.filter_both(formattedDate1, VillaFragment.address);
+                    villaFragment.searched_date.setText("Tonight");
+                    villaFragment.filter_both(formattedDate1, villaFragment.address);
                     dismiss();
                 }
             }
@@ -99,7 +100,7 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 selectedDates.clear(); // Clear the list before adding the new date
-                Stash.clear("dates");
+//                Stash.clear("dates");
 
                 if (selected) {
                     selectedDates.add(date);
@@ -120,15 +121,15 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
 
                     // Formatting the date to the desired output format
                     SimpleDateFormat sdf = new SimpleDateFormat(outputFormat);
-                    String formattedDate = sdf.format(date1);
-                    VillaFragment.searched_date.setText(formattedDate);
-                    if (VillaFragment.address.equals("")) {
-                        VillaFragment.filter_dates(formattedDate);
+                    formattedDate = sdf.format(date1);
+                    villaFragment.searched_date.setText(formattedDate);
+                    if (villaFragment.address.equals("")) {
+                        villaFragment.filter_dates(formattedDate);
                         next_button.setText("Search for " + formattedDate);
 
                     } else {
                         next_button.setText("Search for " + formattedDate);
-                        VillaFragment.filter_both(formattedDate, VillaFragment.address);
+                        villaFragment.filter_both(formattedDate, villaFragment.address);
                     }
 //                    } catch (Exception e) {
 //                        Toast.makeText(c, ""+format, Toast.LENGTH_SHORT).show();
@@ -157,7 +158,7 @@ public class ChooseAvailableCalenderDialogClass extends Dialog {
                 if (next_button.getText().toString().equals("Search")) {
                     Toast.makeText(c, "Please select specific date for searh", Toast.LENGTH_SHORT).show();
                 } else {
-                    VillaFragment.getRecommendedProducts();
+//                    villaFragment.getRecommendedProducts();
                     dismiss();
 
                 }

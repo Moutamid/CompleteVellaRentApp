@@ -58,7 +58,7 @@ public class CalenderDialogClass extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        setContentView(R.layout.calender_dailogue);
+        setContentView(R.layout.calender_dailogue_owner);
         Button next_button = findViewById(R.id.next_button);
         calendarView = findViewById(R.id.calendarView);
         selectedDates = new ArrayList<>();

@@ -1,6 +1,8 @@
 package com.moutimid.vellarentapp.Fragment;
 
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -70,53 +72,48 @@ public class VillaFragment extends Fragment {
     public static String address = "";
     public static double lat;
     public static double lng;
-    TextView nearby_villa;
+    static   TextView nearby_villa;
+    View view_main;
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_villa, container, false);
+        view_main = inflater.inflate(R.layout.fragment_villa, container, false);
         String apiKey = "AIzaSyAuIxeEpQQgN84bBitDRksZTcLHtIKSAeY";
         if (!Places.isInitialized()) {
             Places.initialize(getContext(), apiKey);
         }
 
         placesClient = Places.createClient(getActivity());
-        autoCompleteTextView = view.findViewById(R.id.location_title_edit_text);
-        searched_date = view.findViewById(R.id.searched_date);
+        autoCompleteTextView = view_main.findViewById(R.id.location_title_edit_text);
+        searched_date = view_main.findViewById(R.id.searched_date);
         initAutoCompleteTextView();
-        nearby_villa = view.findViewById(R.id.nearby_villa);
-        loading = view.findViewById(R.id.loading);
-        content_rcv1 = view.findViewById(R.id.content_rcv1);
-        no_text = view.findViewById(R.id.no_text);
+        nearby_villa = view_main.findViewById(R.id.nearby_villa);
+        loading = view_main.findViewById(R.id.loading);
+        content_rcv1 = view_main.findViewById(R.id.content_rcv1);
+        no_text = view_main.findViewById(R.id.no_text);
+
         content_rcv1.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         ownVillaAdapter = new OwnVillaAdapter(getContext(), productModelList);
         content_rcv1.setAdapter(ownVillaAdapter);
 
-        if (Config.isNetworkAvailable(getContext())) {
-            getRecommendedProducts();
-        } else {
-            Toast.makeText(getContext(), "Network not available", Toast.LENGTH_SHORT).show();
-        }
 
         nearby_villa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                address = "";
+                Stash.clear("dates");
+                searched_date.setText("Select date");
+                autoCompleteTextView.setText(null);
                 if (nearby_villa.getText().toString().equals("Show nearby villa")) {
                     nearby_villa.setText("Show all villa");
-                    if (Config.isNetworkAvailable(getContext())) {
-                        getRecommendedProductsDate();
-                    } else {
-                        Toast.makeText(getContext(), "Network not available", Toast.LENGTH_SHORT).show();
-                    }
+                    getRecommendedProductsNearBy();
                 } else {
                     nearby_villa.setText("Show nearby villa");
-                    if (Config.isNetworkAvailable(getContext())) {
-                        getRecommendedProducts();
-                    } else {
-                        Toast.makeText(getContext(), "Network not available", Toast.LENGTH_SHORT).show();
-                    }
+                    getRecommendedProducts();
                 }
             }
         });
@@ -124,6 +121,7 @@ public class VillaFragment extends Fragment {
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             String formattedDate = currentDate.format(formatter);
+            getRecommendedProducts();
 //            filter_dates(formattedDate);
 
         } else {
@@ -159,6 +157,7 @@ public class VillaFragment extends Fragment {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                         String formattedDate = currentDate.format(formatter);
 //                        filter_dates(formattedDate);
+                        getRecommendedProducts();
 
                     } else {
                         String inputDate = Stash.getString("dates");
@@ -212,20 +211,22 @@ public class VillaFragment extends Fragment {
                 availableCalenderDialogClass.show();
             }
         });
-
-        return view;
+        if (Config.isNetworkAvailable(getContext())) {
+            getRecommendedProducts();
+        } else {
+            Toast.makeText(getContext(), "Network not available", Toast.LENGTH_SHORT).show();
+        }
+        return view_main;
     }
 
-    public static void getRecommendedProducts() {
-//        Config.showProgressDialog(getContext());
-        Constants.databaseReference().child(Config.villa).addValueEventListener(new ValueEventListener() {
+    public  void getRecommendedProducts() {
+        Constants.databaseReference().child(Config.villa).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 productModelList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Villa villaModel = ds.getValue(Villa.class);
-                    Log.d("dataa", villaModel.verified + " "+ villaModel.getBedroom());
                     if (villaModel.verified && villaModel.getBedroom() != 0) {
                         DataSnapshot propertyAmenities1 = ds.child("PropertyAmenities");
                         DataSnapshot houseRules1 = ds.child("HouseRules");
@@ -243,10 +244,18 @@ public class VillaFragment extends Fragment {
                         villaModel.rules = ds.child("rules").getValue().toString();
                         villaModel.setImages(imagesMap);
                         productModelList.add(villaModel);
-                        loading.setVisibility(View.GONE);
                     }
-                    ownVillaAdapter.notifyDataSetChanged();
-                }
+                 }
+                loading.setVisibility(View.GONE);
+
+                Log.d("data", productModelList.size() + "  all size");
+                content_rcv1.setVisibility(View.VISIBLE);
+                content_rcv1.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                ownVillaAdapter = new OwnVillaAdapter(requireContext(), productModelList);
+                content_rcv1.setAdapter(ownVillaAdapter);
+//                ownVillaAdapter.notifyDataSetChanged();
+
+
 
             }
 
@@ -262,9 +271,11 @@ public class VillaFragment extends Fragment {
 
     }
 
-    public static void getRecommendedProductsDate() {
+    public  void getRecommendedProductsNearBy() {
 //        Config.showProgressDialog(getContext());
-        Constants.databaseReference().child(Config.villa).addValueEventListener(new ValueEventListener() {
+
+
+        Constants.databaseReference().child(Config.villa).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -272,7 +283,6 @@ public class VillaFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     Villa villaModel = ds.getValue(Villa.class);
-                    Log.d("dataa", villaModel.isBills_included() + "");
                     if (villaModel.verified && villaModel.getBedroom() != 0) {
                         DataSnapshot propertyAmenities1 = ds.child("PropertyAmenities");
                         DataSnapshot houseRules1 = ds.child("HouseRules");
@@ -287,7 +297,6 @@ public class VillaFragment extends Fragment {
                             String imageUrl = imageSnapshot.getValue(String.class);
                             imagesMap.put(imageKey, imageUrl);
                         }
-
                         villaModel.setImages(imagesMap);
                         double v = calculateDistance(Config.lat, Config.lng, villaModel.getLat(), villaModel.getLng());
                         if (v < 15) {
@@ -296,27 +305,18 @@ public class VillaFragment extends Fragment {
                         loading.setVisibility(View.GONE);
 //                        filter_dates(Stash.getString("dates"));
                     }
-                    if(productModelList.size()<1)
-                    {
-                        loading.setVisibility(View.GONE);
+                    Log.d("data", productModelList.size() + " nearby size");
 
+                    if (productModelList.size() < 1) {
+                        loading.setVisibility(View.GONE);
                     }
-//                    else
-//                    {
-//                        if(productModelList.size()>0)
-//
-//                    }
-//                    stringArray = new String[productModelList.size()];
-//                    for (int i = 0; i <= productModelList.size(); i++) {
-//                        stringArray[i] = productModelList.get(i).town_name;
-//
-//                    }
-//                    LocalDate currentDate = LocalDate.now();
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//                    String formattedDate = currentDate.format(formatter);
-//                    filter_dates(formattedDate);
-                    ownVillaAdapter.notifyDataSetChanged();
-                }
+
+                   }
+                content_rcv1.setVisibility(View.VISIBLE);
+
+                content_rcv1.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                ownVillaAdapter = new OwnVillaAdapter(requireContext(), productModelList);
+                content_rcv1.setAdapter(ownVillaAdapter);
 
             }
 
@@ -332,7 +332,7 @@ public class VillaFragment extends Fragment {
 
     }
 
-    public static void filter(String text) {
+    public  void filter(String text) {
         ArrayList<Villa> filteredlist = new ArrayList<Villa>();
         for (Villa item : productModelList) {
             if (item.getName().toLowerCase().contains(text.toLowerCase())) {
@@ -352,15 +352,12 @@ public class VillaFragment extends Fragment {
         }
     }
 
-    public static void filter_both(String dates, String location) {
+    public  void filter_both(String dates, String location) {
         Log.d("data", dates + "  " + location);
         ArrayList<Villa> filteredlist = new ArrayList<Villa>();
 
-        // Split the location into individual words
-        String[] locationWords = location.toLowerCase().split("\\s+");
-
         for (Villa item : productModelList) {
-            if (containsIgnoreCase(item.available_dates, dates.toLowerCase()) && containsAllKeywordsInTitle(item.getTitle().toLowerCase(), locationWords)) {
+            if (matchQuery(location, item.getTitle()) && item.available_dates.contains(dates.toLowerCase())) {
                 filteredlist.add(item);
                 Log.d("data1", dates + "  " + location);
             }
@@ -374,30 +371,18 @@ public class VillaFragment extends Fragment {
             no_text.setVisibility(View.GONE);
             ownVillaAdapter.filterList(filteredlist);
         }
+
     }
 
-    // Utility method for case-insensitive partial matching of keywords in the villa title
-    private static boolean containsAllKeywordsInTitle(String baseText, String[] keywords) {
-        // Check if all keywords are present in the baseText
-        for (String keyword : keywords) {
-            if (!baseText.contains(keyword)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    // Utility method for case-insensitive partial matching of a string in another string
-
-
-    public static void filter_locations(String searchQuery) {
+    public  void filter_locations(String searchQuery) {
         autoCompleteTextView.setFocusable(true);
 
         ArrayList<Villa> filteredlist = new ArrayList<Villa>();
         String[] searchWords = searchQuery.toLowerCase().split("\\s+");
 
         for (Villa item : productModelList) {
-            if (containsAllWordsIgnoreCase1(item.getTitle(), searchWords)) {
+            if (matchQuery(searchQuery, item.getTitle())) {
                 Log.d("place", item + "");
                 filteredlist.add(item);
             }
@@ -413,18 +398,8 @@ public class VillaFragment extends Fragment {
         }
     }
 
-    // Utility method for case-insensitive partial matching of all search words
-    private static boolean containsAllWordsIgnoreCase1(String baseText, String[] searchWords) {
-        baseText = baseText.toLowerCase();
-        for (String searchWord : searchWords) {
-            if (!baseText.contains(searchWord)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    public static void filter_dates(String text) {
+    public  void filter_dates(String text) {
         ArrayList<Villa> filteredlist = new ArrayList<Villa>();
         for (Villa item : productModelList) {
             if (item.available_dates.contains(text.toLowerCase())) {
@@ -447,7 +422,9 @@ public class VillaFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
+
     }
 
 
@@ -518,11 +495,11 @@ public class VillaFragment extends Fragment {
         }
     };
 
-    private static boolean containsIgnoreCase(String baseText, String searchText) {
+    private  boolean containsIgnoreCase(String baseText, String searchText) {
         return baseText.contains(searchText);
     }
 
-    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    public  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
 
@@ -535,6 +512,31 @@ public class VillaFragment extends Fragment {
         double distance = EARTH_RADIUS * c;
 
         return distance;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save the state variables to outState
+        outState.putString("searched_date", searched_date.getText().toString());
+        outState.putString("autoCompleteText", autoCompleteTextView.getText().toString());
+    }
+
+    private  boolean matchQuery(String query, String text) {
+        // Split the search query and existing text into words
+        String[] queryWords = query.toLowerCase().split("\\s*,\\s*");
+        String[] textWords = text.toLowerCase().split("\\s*,\\s*");
+
+        // Check if any word from the query is present in the existing text
+        for (String queryWord : queryWords) {
+            for (String textWord : textWords) {
+                if (textWord.contains(queryWord)) {
+                    return true; // Match found
+                }
+            }
+        }
+
+        return false; // No match found
     }
 
 }

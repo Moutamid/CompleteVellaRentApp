@@ -37,6 +37,7 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
         this.productModels = productModels;
     }
 
+
     @NonNull
     @Override
     public GalleryPhotosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -14,7 +14,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.fxn.stash.Stash;
 import com.moutamid.vellarentapp.R;
@@ -31,7 +33,10 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 public class MainActivity extends AppCompatActivity {
     final int PERMISSION_REQUEST_CODE = 112;
 
-    SmoothBottomBar binding;
+    SmoothBottomBar bottomBar;
+    ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
+
     private GPSTracker gpsTracker;
 
     @Override
@@ -60,27 +65,39 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        binding = findViewById(R.id.bottomBar);
-        Config.checkApp(MainActivity.this);
-        replaceFragment(new VillaFragment());
-        binding.setBackground(null);
+         Config.checkApp(MainActivity.this);
+//        replaceFragment(new VillaFragment());
         getLocation();
-        binding.setOnItemSelectedListener(new OnItemSelectedListener() {
+        bottomBar = findViewById(R.id.bottomBar);
+        viewPager = findViewById(R.id.frame_layout);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(viewPagerAdapter);
+
+        bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int item) {
-                if (item == 2) {
-                    replaceFragment(new ProfileFragment());
-                } else if (item == 0) {
-                    replaceFragment(new VillaFragment());
-                    Stash.clear("dates");
-
-                } else if (item == 1) {
-                    replaceFragment(new FavouriteFragment());
-                }
+                viewPager.setCurrentItem(item);
                 return true;
             }
         });
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Not needed for your case
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomBar.setItemActiveIndex(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Not needed for your case
+            }
+        });
     }
 
     @Override
@@ -129,13 +146,39 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
+    private static class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new VillaFragment();
+                case 1:
+                    return new FavouriteFragment();
+                case 2:
+                    return new ProfileFragment();
+                default:
+                    return new VillaFragment();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 3; // Number of tabs
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = viewPagerAdapter.getItem(viewPager.getCurrentItem());
+        if (currentFragment instanceof VillaFragment) {
+            finishAffinity();
+        } else {
+            viewPager.setCurrentItem(0, true);
+        }
+    }
 }

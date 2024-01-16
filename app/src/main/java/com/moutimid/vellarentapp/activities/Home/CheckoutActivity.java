@@ -1,8 +1,6 @@
 package com.moutimid.vellarentapp.activities.Home;
 
 
-
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.moutamid.vellarentapp.R;
-import com.moutimid.vellarentapp.MainActivity;
 import com.moutimid.vellarentapp.activities.notification.Constants;
 import com.moutimid.vellarentapp.activities.notification.NotificationScheduler;
+import com.moutimid.vellarentapp.dailogues.ChooseReservationDate;
 import com.moutimid.vellarentapp.helper.Config;
 import com.moutimid.vellarentapp.model.Villa;
 import com.moutimid.vellarentapp.rentownerapp.model.Booking;
@@ -56,7 +54,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private EditText etName;
     int j = 0;
     private EditText etNumberOfPersons;
-    private EditText etDate;
+    public static EditText etDate;
     private Button btnContinue;
 
     // Declare the Firebase database reference
@@ -75,7 +73,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Initialize the Firebase database reference
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+//        ChooseReservationDate.date_now = etDate.getText().toString();
         // Initialize the views
         etCardNumber = findViewById(R.id.et_card_number);
         etName = findViewById(R.id.et_name);
@@ -122,10 +120,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     etCardNumber.setError("Please Enter");
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError("Please Enter");
-
                 } else if (etNumberOfPersons.getText().toString().isEmpty()) {
                     etNumberOfPersons.setError("Please Enter");
-
                 } else if (etDate.getText().toString().isEmpty()) {
                     etDate.setError("Please Enter");
                 } else if (etDate.getText().toString().isEmpty()) {
@@ -276,4 +272,9 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
 
+    public void date(View view) {
+        ChooseReservationDate availableCalenderDialogClass = new ChooseReservationDate(CheckoutActivity.this);
+        availableCalenderDialogClass.show();
+
+    }
 }
