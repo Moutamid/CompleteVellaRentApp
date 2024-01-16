@@ -5,6 +5,7 @@ public class UserModel {
     public String image_url;
     public String key;
     public String type;
+    public String password;
 
     public UserModel() {
     }

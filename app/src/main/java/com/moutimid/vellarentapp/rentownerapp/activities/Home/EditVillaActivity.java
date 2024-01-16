@@ -41,6 +41,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.moutamid.vellarentapp.R;
 import com.moutimid.vellarentapp.helper.Config;
 import com.moutimid.vellarentapp.model.HouseRules;
@@ -229,6 +231,11 @@ public class EditVillaActivity extends AppCompatActivity {
         tvCheckbox.setChecked(villaModel.getPropertyAmenities().isTv());
         washingMachineCheckbox.setChecked(villaModel.getPropertyAmenities().isWashingMachine());
         wifiCheckbox.setChecked(villaModel.getPropertyAmenities().isWifi());
+        if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("admin@gmail.com")) {
+            selectImageButton.setVisibility(View.GONE);
+        } else {
+            selectImageButton.setVisibility(View.VISIBLE);
+        }
         Log.d("text", villaModel.rules + " mn");
 // Set values for other checkboxes
 
@@ -409,11 +416,11 @@ public class EditVillaActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGES_REQUEST);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGES_REQUEST);
     }
 
 
@@ -433,14 +440,42 @@ public class EditVillaActivity extends AppCompatActivity {
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    imageUri = data.getClipData().getItemAt(i).getUri();
                     selectedImageUris.add(imageUri);
+
                 }
             } else if (data.getData() != null) {
-                Uri imageUri = data.getData();
+                imageUri = data.getData();
                 selectedImageUris.add(imageUri);
+
             }
-            imageAdapter.notifyDataSetChanged();
+            Dialog lodingbar = new Dialog(EditVillaActivity.this);
+            lodingbar.setContentView(R.layout.loading);
+            Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
+            lodingbar.setCancelable(false);
+            lodingbar.show();
+            String filePathName = "villas/";
+            final String timestamp = "" + System.currentTimeMillis();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathName + timestamp);
+            UploadTask urlTask = storageReference.putFile(imageUri);
+            Task<Uri> uriTask = urlTask.continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(EditVillaActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return storageReference.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadImageUri = task.getResult();
+                    if (downloadImageUri != null) {
+                        lodingbar.dismiss();
+                        imageUrls.add(downloadImageUri.toString());
+
+                        imageAdapter.notifyDataSetChanged();
+
+                    }
+                }
+            });
+
         }
     }
 

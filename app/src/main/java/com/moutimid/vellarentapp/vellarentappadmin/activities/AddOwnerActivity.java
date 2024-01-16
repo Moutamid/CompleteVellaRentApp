@@ -72,6 +72,7 @@ public class AddOwnerActivity extends AppCompatActivity {
                                 userModel.email = email;
                                 userModel.type = "owner";
                                 userModel.id = user.getUid();
+                                userModel.password = password;
 
 
                                 // Create Owner object and push to Firebase Realtime Database

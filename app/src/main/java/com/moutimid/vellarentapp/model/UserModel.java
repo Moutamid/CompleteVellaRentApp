@@ -4,6 +4,7 @@ public class UserModel {
     public String name, email, id;
     public String type;
     public String key;
+    public String password;
 
     public UserModel() {
     }
