@@ -62,7 +62,7 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
             holder.villa_name.setText(villa.getName());
             holder.villa_location.setText(villa.getTitle());
             holder.bill.setText("$" + villa.getBill() + "");
-            holder.avaialble_for.setText(villa.getBedroom() + " rooms left here");
+            holder.avaialble_for.setText(villa.getBedroom() + " sunbeds left here");
             Glide.with(ctx).load(villa.getImage()).into(holder.image);
 //        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

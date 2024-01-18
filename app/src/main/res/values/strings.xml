@@ -5,7 +5,7 @@
     <string name="property_name">Property Name</string>
     <string name="property_description">Property Description</string>
     <string name="property_area">Area (m²)</string>
-    <string name="bedroom">Number of Sun Loungers</string>
+    <string name="bedroom">Number of Sunbeds</string>
     <string name="bathroom">Number of Bathrooms</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>

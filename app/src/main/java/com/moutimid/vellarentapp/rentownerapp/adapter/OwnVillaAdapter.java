@@ -130,7 +130,7 @@ public class OwnVillaAdapter extends RecyclerView.Adapter<OwnVillaAdapter.Galler
 
             }
         });
-        holder.avaialble_for.setText(villa.getBedroom()+ " rooms left here");
+        holder.avaialble_for.setText(villa.getBedroom()+ " sunbeds left here");
 
         if (villa.getAvailable().equals("not_available")) {
             holder.not_available.setChecked(true);

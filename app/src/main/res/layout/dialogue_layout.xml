@@ -31,7 +31,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="-15dp"
         android:fontFamily="@font/lexend_medium"
-        android:hint="Available rooms"
+        android:hint="Available sunbeds"
         android:inputType="number"
         android:padding="10dp"
         android:layout_marginTop="-15dp"
